@@ -1,3 +1,5 @@
+package Code;
+
 import java.util.Scanner;
 
 public class FrontEnd {
@@ -7,7 +9,11 @@ public class FrontEnd {
 
         while(run == true) {
 
-            String[] array = {"reng", "uvct", "guhv"};
+            Movie obj1 = new Movie();
+            Movie obj2 = new Movie();
+            Movie obi3 = new Movie();
+
+            Movie[] array = {"reng", "uvct", "guhv"};
 
             System.out.println("Cattolog: ");
             for (int i = 0; i < array.length; i++) {
@@ -26,6 +32,7 @@ public class FrontEnd {
             if (answer.equalsIgnoreCase("yes")) {
                 run = false;
             }
+            
         }
     }
 }
