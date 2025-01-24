@@ -1,17 +1,50 @@
-from Backend import movies
+import csv
+from Backend import *
 
-run = True
+def display_catalog(catalog):
+    print("\nCatalog:")
+    if not catalog:
+        print("No movies in the catalog.")
+    else:
+        for i, item in enumerate(catalog):
+            genre = item.get('Genre', 'Unknown')
+            print(f"{i + 1}. {item['Movie Name']} (Genre: {genre})")
 
-while(run):
-    print("Cattolog: ")
-    for i in range(3):
-        print(movies[i]["Movie Name"])
-    
-    user_input = input("Enter movie number for full detail: ")
-    print(movies[int(user_input)])
+def main():
+    catalog_file = 'Code/main.csv'
+    catalog = read_catalog(catalog_file)
 
-    exit_input = input("do you want to exit (type 'yes' to exit): ")
-    if exit_input == "yes":
-        run = False
+    while True:
+        print("\nOptions:")
+        print("1. Add a new movie")
+        print("2. Edit an existing movie")
+        print("3. View all movies")
+        print("4. Exit")
+        choice = input("Enter your choice: ").strip()
 
+        if choice == '1':
+            new_item = {
+                'Movie Name': input("Enter new movie name: ").strip(),
+                'Genre': input("Enter movie genre: ").strip()
+            }
+            add_item(catalog, new_item)
+            print("Movie added successfully.")
 
+        elif choice == '2':
+            display_catalog(catalog)
+            index = int(input("Enter the movie number to edit: ").strip()) - 1
+            field = input("Enter the field to edit (Movie Name/Genre): ").strip()
+            new_value = input(f"Enter the new value for {field}: ").strip()
+            edit_item(catalog, index, field, new_value)
+            print("Movie updated successfully.")
+
+        elif choice == '3':
+            display_catalog(catalog)
+
+        elif choice == '4':
+            save_catalog(catalog_file, catalog)
+            print("Changes saved. Exiting program.")
+            break
+
+if __name__ == "__main__":
+    main()
