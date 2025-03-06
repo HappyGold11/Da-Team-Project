@@ -12,6 +12,8 @@ public class Frontend {
             frame.setLocationRelativeTo(null);
             frame.setLayout(new BorderLayout());
 
+            //DefaultListModel<String> driverListModel;
+
             // Create a panel for the buttons at the top
             JPanel topPanel = new JPanel();
             
@@ -20,12 +22,15 @@ public class Frontend {
             JButton button2 = new JButton("Bookmarked Teams");
             JButton button3 = new JButton("Settings");
             JButton button4 = new JButton("Login");
+            JButton button5 = new JButton("Register");
+            
 
             topPanel.add(button1);
             topPanel.add(button2);
             topPanel.add(button3);
             topPanel.add(button4);
-
+            topPanel.add(button5);
+            Backend backend = new Backend();
             // Create tabbed pane
             JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -35,11 +40,39 @@ public class Frontend {
 
             // Create second panel
             JPanel panel2 = new JPanel();
-            panel2.add(new JLabel("Welcome to the Driver's page"));
+            //panel2.add(new JLabel("Welcome to the Driver Page!"));
+            // Create a JList to display drivers 
+            DefaultListModel<String> driverListModel = new DefaultListModel<>();
+            JList<String> driverList = new JList<>(driverListModel);
+            panel2.add(new JScrollPane(driverList));
+            
+            // Populate the JList with driver names from backend
+            for (String driver : backend.getDrivers()) {
+                driverListModel.addElement(driver);
+            }
+            panel2.setLayout(new BorderLayout());
+            panel2.add(new JScrollPane(driverList), BorderLayout.CENTER);
+
+
 
             // Create third panel
             JPanel panel3 = new JPanel();
             panel3.add(new JLabel("Welcome to the Teams page"));
+
+            // Create a JList to display teams
+            DefaultListModel<String> teamListModel = new DefaultListModel<>();
+            JList<String> teamList = new JList<>(teamListModel);
+            panel3.setLayout(new BorderLayout());
+            panel3.add(new JScrollPane(teamList), BorderLayout.CENTER);
+
+            // Populate the JList with team names from backend
+            for (String team : backend.getTeams()) {
+                teamListModel.addElement(team);
+            }
+            panel3.setLayout(new BorderLayout());
+            panel3.add(new JScrollPane(teamList), BorderLayout.CENTER);
+
+
 
             // Add panels as tabs
             tabbedPane.addTab("Home", panel1);
@@ -52,6 +85,9 @@ public class Frontend {
 
             // Make the frame visible
             frame.setVisible(true);
+            System.out.println(backend.getDrivers());;
+
+            
         });
     }
 }
