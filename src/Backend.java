@@ -12,17 +12,17 @@ public class Backend {
         teams = new ArrayList<>();
         personalDriversList = new ArrayList<>();
         personalTeamsList = new ArrayList<>();
-        loadDataFromCSV("Drivers.csv"); // Ensure the CSV is in the same directory
+        loadDataFromCSV("Drivers.csv",drivers); // Ensure the CSV is in the same directory
+        loadDataFromCSV("Teams.csv",teams);
     }
 
-    void loadDataFromCSV(String fileName) {
+    void loadDataFromCSV(String fileName,List<String> list) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(","); // Assuming the CSV format is "Driver Name,Team Name"
-                if (data.length >= 2) {
-                    drivers.add(data[0]); // First column is Driver Name
-                    teams.add(data[1]);   // Second column is Team Name
+                if (data.length >= 1) {
+                    list.add(line);
                 }
             }
         } catch (IOException e) {
