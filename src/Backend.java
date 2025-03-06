@@ -57,5 +57,6 @@ public class Backend {
     public List<String> getPersonalTeamsList() {
         return personalTeamsList;
     }
+    
 }
 
