@@ -6,7 +6,7 @@ public class Frontend {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             // Create the main frame
-            JFrame frame = new JFrame("Tabbed Window with Multiple Buttons");
+            JFrame frame = new JFrame("F1 Database");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(800, 500);
             frame.setLocationRelativeTo(null);
