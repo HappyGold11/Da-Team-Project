@@ -6,6 +6,8 @@ import java.sql.*;
 
 public class Frontend {
     Backend backend = new Backend();
+    DefaultListModel<String> driverListModel = new DefaultListModel<>();
+    DefaultListModel<String> teamListModel = new DefaultListModel<>();
 
     public Frontend(){
         // Create the main frame
@@ -40,7 +42,6 @@ public class Frontend {
 
         // Create second panel (Drivers)
         JPanel panel2 = new JPanel();
-        DefaultListModel<String> driverListModel = new DefaultListModel<>();
         JList<String> driverList = new JList<>(driverListModel);
         panel2.setLayout(new BorderLayout());
         panel2.add(new JScrollPane(driverList), BorderLayout.CENTER);
@@ -50,7 +51,6 @@ public class Frontend {
 
         // Create third panel (Teams)
         JPanel panel3 = new JPanel();
-        DefaultListModel<String> teamListModel = new DefaultListModel<>();
         JList<String> teamList = new JList<>(teamListModel);
         panel3.setLayout(new BorderLayout());
         panel3.add(new JScrollPane(teamList), BorderLayout.CENTER);
@@ -109,9 +109,11 @@ public class Frontend {
     //Checks if user is on drivers or teams tab, then runs the search in that category
     private void callSearch(String text, int selectedTab) {
         if (selectedTab == 1) {
-            backend.searchDrivers(text);
+            driverListModel.clear();
+            backend.searchDrivers(text, driverListModel);
         } else if (selectedTab == 2) {
-            backend.searchTeams(text);
+            teamListModel.clear();
+            backend.searchTeams(text, teamListModel);
         }
     }
 

@@ -59,13 +59,16 @@ public class Backend {
         return personalTeamsList;
     }
 
-    public void searchDrivers(String text) {
-        return;
+    public void searchDrivers(String text, DefaultListModel<String> driverList) {
+        for (String line : getDrivers()) {
+            if (line.contains(text)) {driverList.addElement(line);}
+        }
     }
 
-    public void searchTeams(String text) {
-        return;
+    public void searchTeams(String text, DefaultListModel<String> teamList) {
+        for (String line : getTeams()) {
+            if (line.contains(text)) {teamList.addElement(line);}
+        }
     }
-    
 }
 
