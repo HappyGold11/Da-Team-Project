@@ -9,9 +9,9 @@ public class Frontend {
     Backend backend = new Backend();
     private DefaultListModel<String> driverListModel;
     private DefaultListModel<String> teamListModel;
+    private JTextField searchBar;
     private JList<String> driverList; 
     private JList<String> teamList;
-    private JTextField searchBar;
 
     public Frontend() {
         // Create the main frame
