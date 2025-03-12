@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Backend {
     private List<String> drivers;
@@ -59,12 +60,27 @@ public class Backend {
         return personalTeamsList;
     }
 
-    public void searchDrivers(String text) {
-        return;
+    public List<String> searchDrivers(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return drivers; // If no input, return full list
+        }
+
+        String query = text.toLowerCase();
+        return drivers.stream()
+                .filter(driver -> driver.toLowerCase().contains(query))
+                .collect(Collectors.toList());
     }
 
-    public void searchTeams(String text) {
-        return;
+    // Search function for teams
+    public List<String> searchTeams(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return teams; // If no input, return full list
+        }
+
+        String query = text.toLowerCase();
+        return teams.stream()
+                .filter(team -> team.toLowerCase().contains(query))
+                .collect(Collectors.toList());
     }
     
 }
