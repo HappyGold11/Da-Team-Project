@@ -5,6 +5,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 public class Frontend {
+    Backend backend = new Backend();
+
     public Frontend(){
         // Create the main frame
         JFrame frame = new JFrame("F1 Database");
@@ -28,8 +30,6 @@ public class Frontend {
         topPanel.add(button3);
         topPanel.add(button4);
         topPanel.add(button5);
-
-        Backend backend = new Backend();
         
         // Create tabbed pane
         JTabbedPane tabbedPane = new JTabbedPane();
@@ -63,9 +63,22 @@ public class Frontend {
         tabbedPane.addTab("Drivers", panel2);
         tabbedPane.addTab("Teams", panel3);
 
+        //Search function
+        JPanel search = new JPanel();
+        JTextField searchBar = new JTextField(10); //Change number to set size of searchbar
+        JButton searchButton = new JButton("Search");
+        search.add(searchBar);
+        search.add(searchButton);
+
+        //Run the search function
+        searchButton.addActionListener(e -> {
+            callSearch(searchBar.getText(), tabbedPane.getSelectedIndex());
+        });
+
         // Add components to the frame
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(tabbedPane, BorderLayout.CENTER);
+        frame.add(search, BorderLayout.SOUTH);
 
 
         // Add action listeners for Login & Register
@@ -82,7 +95,6 @@ public class Frontend {
         JPasswordField passwordField = new JPasswordField();
         Object[] message = {"Username:", usernameField, "Password:", passwordField};
         int option = JOptionPane.showConfirmDialog(null, message, "Register", JOptionPane.OK_CANCEL_OPTION);
-        
     }
 
     // Show Login Dialog
@@ -92,6 +104,15 @@ public class Frontend {
         Object[] message = {"Username:", usernameField, "Password:", passwordField};
         int option = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
         
+    }
+
+    //Checks if user is on drivers or teams tab, then runs the search in that category
+    private void callSearch(String text, int selectedTab) {
+        if (selectedTab == 1) {
+            backend.searchDrivers(text);
+        } else if (selectedTab == 2) {
+            backend.searchTeams(text);
+        }
     }
 
     public static void main(String[] args) {
