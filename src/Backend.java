@@ -82,6 +82,5 @@ public class Backend {
                 .filter(team -> team.toLowerCase().contains(query))
                 .collect(Collectors.toList());
     }
-    
 }
 

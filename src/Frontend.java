@@ -8,8 +8,8 @@ import java.sql.*;
 public class Frontend {
     Backend backend = new Backend();
     private DefaultListModel<String> driverListModel;
-    private JList<String> driverList;
     private DefaultListModel<String> teamListModel;
+    private JList<String> driverList; 
     private JList<String> teamList;
     private JTextField searchBar;
 
