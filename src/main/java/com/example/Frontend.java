@@ -117,7 +117,7 @@ public class Frontend {
     }
 
     // Search function for teams
-    private void searchTeams(String query) {
+    public void searchTeams(String query) {
         List<String> filteredTeams = backend.searchTeams(query); 
         teamListModel.clear();
         for (String team : filteredTeams) {
@@ -126,7 +126,7 @@ public class Frontend {
     }
 
     // Search function for drivers
-    private void searchDrivers(String query) {
+    public void searchDrivers(String query) {
         List<String> filteredDrivers = backend.searchDrivers(query); 
         driverListModel.clear();
         for (String driver : filteredDrivers) {
