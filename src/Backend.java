@@ -18,7 +18,7 @@ public class Backend {
         loadDataFromCSV("Teams.csv",teams);
     }
 
-    void loadDataFromCSV(String fileName,List<String> list) {
+    public void loadDataFromCSV(String fileName,List<String> list) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -82,5 +82,6 @@ public class Backend {
                 .filter(team -> team.toLowerCase().contains(query))
                 .collect(Collectors.toList());
     }
+
 }
 
