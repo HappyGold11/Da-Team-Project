@@ -1,11 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 public class Frontend {
-    public Frontend(){
+    Backend backend = new Backend();
+    private DefaultListModel<String> driverListModel;
+    private DefaultListModel<String> teamListModel;
+    private JTextField searchBar;
+    private JList<String> driverList; 
+    private JList<String> teamList;
+
+    public Frontend() {
         // Create the main frame
         JFrame frame = new JFrame("F1 Database");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -15,8 +23,6 @@ public class Frontend {
 
         // Create a panel for the buttons at the top
         JPanel topPanel = new JPanel();
-        
-        // Add multiple buttons to the top panel
         JButton button1 = new JButton("Bookmarked Drivers");
         JButton button2 = new JButton("Bookmarked Teams");
         JButton button3 = new JButton("Settings");
@@ -29,50 +35,60 @@ public class Frontend {
         topPanel.add(button4);
         topPanel.add(button5);
 
-        Backend backend = new Backend();
-        
         // Create tabbed pane
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        // Create first panel
+        // Home Panel
         JPanel panel1 = new JPanel();
         panel1.add(new JLabel("Welcome to the Homepage"));
 
-        // Create second panel (Drivers)
+        // Drivers Panel
         JPanel panel2 = new JPanel();
-        DefaultListModel<String> driverListModel = new DefaultListModel<>();
-        JList<String> driverList = new JList<>(driverListModel);
+        driverListModel = new DefaultListModel<>();
+        driverList = new JList<>(driverListModel);
         panel2.setLayout(new BorderLayout());
         panel2.add(new JScrollPane(driverList), BorderLayout.CENTER);
         for (String driver : backend.getDrivers()) {
             driverListModel.addElement(driver);
         }
 
-        // Create third panel (Teams)
+        // Teams Panel
         JPanel panel3 = new JPanel();
-        DefaultListModel<String> teamListModel = new DefaultListModel<>();
-        JList<String> teamList = new JList<>(teamListModel);
+        teamListModel = new DefaultListModel<>();
+        teamList = new JList<>(teamListModel);
         panel3.setLayout(new BorderLayout());
         panel3.add(new JScrollPane(teamList), BorderLayout.CENTER);
         for (String team : backend.getTeams()) {
             teamListModel.addElement(team);
         }
 
-        // Add panels as tabs
+        // Add tabs
         tabbedPane.addTab("Home", panel1);
         tabbedPane.addTab("Drivers", panel2);
         tabbedPane.addTab("Teams", panel3);
 
+        // Search Panel
+        JPanel search = new JPanel();
+        searchBar = new JTextField(10);
+        JButton searchButton = new JButton("Search");
+        search.add(searchBar);
+        search.add(searchButton);
+
+        // Search button logic
+        searchButton.addActionListener(e -> {
+            callSearch(searchBar.getText(), tabbedPane.getSelectedIndex());
+        });
+
         // Add components to the frame
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(tabbedPane, BorderLayout.CENTER);
+        frame.add(search, BorderLayout.SOUTH);
 
-
-        // Add action listeners for Login & Register
+        // Action listeners for Login & Register
         button4.addActionListener(e -> loginDialog());
         button5.addActionListener(e -> registerDialog());
 
-        // Make the frame visible
+        // Make frame visible
         frame.setVisible(true);
     }
 
@@ -81,8 +97,7 @@ public class Frontend {
         JTextField usernameField = new JTextField();
         JPasswordField passwordField = new JPasswordField();
         Object[] message = {"Username:", usernameField, "Password:", passwordField};
-        int option = JOptionPane.showConfirmDialog(null, message, "Register", JOptionPane.OK_CANCEL_OPTION);
-        
+        JOptionPane.showConfirmDialog(null, message, "Register", JOptionPane.OK_CANCEL_OPTION);
     }
 
     // Show Login Dialog
@@ -90,13 +105,39 @@ public class Frontend {
         JTextField usernameField = new JTextField();
         JPasswordField passwordField = new JPasswordField();
         Object[] message = {"Username:", usernameField, "Password:", passwordField};
-        int option = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
-        
+        JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
+    }
+
+    // Calls search for the correct tab
+    private void callSearch(String text, int selectedTab) {
+        if (selectedTab == 1) {
+            searchDrivers(text);
+        } else if (selectedTab == 2) {
+            searchTeams(text);
+        }
+    }
+
+    // Search function for teams
+    private void searchTeams(String query) {
+        List<String> filteredTeams = backend.searchTeams(query); 
+        teamListModel.clear();
+        for (String team : filteredTeams) {
+            teamListModel.addElement(team);
+        }
+    }
+
+    // Search function for drivers
+    private void searchDrivers(String query) {
+        List<String> filteredDrivers = backend.searchDrivers(query); 
+        driverListModel.clear();
+        for (String driver : filteredDrivers) {
+            driverListModel.addElement(driver);
+        }
     }
 
     public static void main(String[] args) {
-        Frontend f = new Frontend();
+        new Frontend();
     }
-   
 }
+
 
