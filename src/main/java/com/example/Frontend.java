@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Arrays;
 
@@ -78,7 +79,7 @@ public class Frontend {
             driverTableModel.addRow(row);
         }
 
-        // Add click listener to load headshot + details
+        // Add click listener to load square-cropped headshot + stats
         driverTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = driverTable.getSelectedRow();
@@ -96,37 +97,53 @@ public class Frontend {
 
                     String imagePath = "/img/Head_Shots/" + driverName + ".jpg";
                     java.net.URL imgURL = getClass().getResource(imagePath);
+                    JLabel imageLabel;
 
                     if (imgURL != null) {
                         ImageIcon originalIcon = new ImageIcon(imgURL);
-                        Image scaledImage = originalIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-                        JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
-                        imageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                        Image originalImage = originalIcon.getImage();
+                        int width = originalImage.getWidth(null);
+                        int height = originalImage.getHeight(null);
+                        int squareSize = Math.min(width, height);
+                        int x = (width - squareSize) / 2;
+                        int y = (height - squareSize) / 2;
 
-                        JTextArea detailText = new JTextArea();
-                        detailText.setEditable(false);
-                        detailText.setFont(new Font("Monospaced", Font.PLAIN, 13));
-                        detailText.setText("Driver Details:\n\n"
-                                + "Name: " + driverName + "\n"
-                                + "Team: " + team + "\n"
-                                + "Wins: " + wins + "\n"
-                                + "Podiums: " + podiums + "\n"
-                                + "Salary: " + salary + "\n"
-                                + "Contract Ends: " + contractEnds + "\n"
-                                + "Career Points: " + points + "\n"
-                                + "Current Standing: " + standing + "\n");
+                        BufferedImage bufferedOriginal = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+                        Graphics2D g2d = bufferedOriginal.createGraphics();
+                        g2d.drawImage(originalImage, 0, 0, null);
+                        g2d.dispose();
 
-                        JPanel contentPanel = new JPanel(new BorderLayout());
-                        contentPanel.add(imageLabel, BorderLayout.WEST);
-                        contentPanel.add(new JScrollPane(detailText), BorderLayout.CENTER);
-
-                        detailPanel.add(contentPanel, BorderLayout.CENTER);
+                        BufferedImage cropped = bufferedOriginal.getSubimage(x, y, squareSize, squareSize);
+                        Image scaledImage = cropped.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+                        imageLabel = new JLabel(new ImageIcon(scaledImage));
                     } else {
-                        JLabel notFoundLabel = new JLabel("Headshot not found for " + driverName);
-                        notFoundLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                        detailPanel.add(notFoundLabel, BorderLayout.CENTER);
+                        imageLabel = new JLabel("No headshot found");
+                        imageLabel.setPreferredSize(new Dimension(120, 120));
+                        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
                     }
 
+                    imageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+                    JTextArea detailText = new JTextArea();
+                    detailText.setEditable(false);
+                    detailText.setFont(new Font("SansSerif", Font.PLAIN, 13));
+                    detailText.setText(
+                            "Name: " + driverName + "\n" +
+                                    "Team: " + team + "\n" +
+                                    "Wins: " + wins + "\n" +
+                                    "Podiums: " + podiums + "\n" +
+                                    "Salary: " + salary + "\n" +
+                                    "Contract Ends: " + contractEnds + "\n" +
+                                    "Career Points: " + points + "\n" +
+                                    "Current Standing: " + standing + "\n"
+                    );
+
+                    JPanel contentPanel = new JPanel(new BorderLayout(10, 10));
+                    contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                    contentPanel.add(imageLabel, BorderLayout.NORTH);
+                    contentPanel.add(new JScrollPane(detailText), BorderLayout.CENTER);
+
+                    detailPanel.add(contentPanel, BorderLayout.CENTER);
                     detailPanel.revalidate();
                     detailPanel.repaint();
                 }

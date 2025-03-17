@@ -5,38 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bfdf1836-3a5b-47be-affc-d73d4ad2388e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Alexander Albon.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Andrea Kimi Antonelli.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Carlos Sainz.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Charles Leclerc.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Estaban Ocon.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Fernando Alonso.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Gabriel Bortoleto.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/George Russell.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Isack Hadjar.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Jack Doohan.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Lance Stroll.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Lewis Hamilton.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Liam Lawson.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Max Verstappen.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Nico Hulkenberg.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Oilver Bearman.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Oscar Piastri.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Pierre Gasly.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Yuki Tsunoda.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/lando Norris.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Frontend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Frontend.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/Backend.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/Backend.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/Frontend$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/Frontend$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/Frontend$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/Frontend$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/Frontend.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/Frontend.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-TestingBackend.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-TestingBackend.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-TestingFrontend.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-TestingFrontend.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TestingBackend.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TestingBackend.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TestingFrontend.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TestingFrontend.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/TestingBackend.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/TestingBackend.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/TestingFrontend.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/TestingFrontend.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +174,7 @@
       <workItem from="1741905518217" duration="1280000" />
       <workItem from="1741906817043" duration="1815000" />
       <workItem from="1742179793490" duration="51000" />
-      <workItem from="1742245421389" duration="4514000" />
+      <workItem from="1742245421389" duration="6826000" />
     </task>
     <servers />
   </component>
