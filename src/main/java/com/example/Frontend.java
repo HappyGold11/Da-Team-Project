@@ -53,7 +53,12 @@ public class Frontend {
                 "Name", "Team", "Wins", "Podiums", "Salary",
                 "Contract Ends", "Career Points", "Current Standing"
         };
-        driverTableModel = new DefaultTableModel(driverColumns, 0);
+        DefaultTableModel driverTableModel = new DefaultTableModel(driverColumns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Makes all cells non-editable
+            }
+        };
         driverTable = new JTable(driverTableModel);
         styleTable(driverTable);
 
@@ -154,7 +159,12 @@ public class Frontend {
         JPanel panel3 = new JPanel(new BorderLayout());
 
         String[] teamColumns = {"Team"};
-        teamTableModel = new DefaultTableModel(teamColumns, 0);
+        DefaultTableModel teamTableModel = new DefaultTableModel(teamColumns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Makes all cells non-editable
+            }
+        };
         teamTable = new JTable(teamTableModel);
         styleTable(teamTable);
 
