@@ -150,17 +150,90 @@ public class Frontend {
             }
         });
 
-        // Teams Panel
+// --- Teams Panel with Table and SplitPane ---
         JPanel panel3 = new JPanel(new BorderLayout());
+
         String[] teamColumns = {"Team"};
         teamTableModel = new DefaultTableModel(teamColumns, 0);
         teamTable = new JTable(teamTableModel);
         styleTable(teamTable);
-        panel3.add(new JScrollPane(teamTable), BorderLayout.CENTER);
 
+        JPanel teamDetailPanel = new JPanel(new BorderLayout());
+        JLabel teamDetailLabel = new JLabel("Select a team to see more details...");
+        teamDetailLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        teamDetailLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        teamDetailPanel.add(teamDetailLabel, BorderLayout.CENTER);
+
+        JScrollPane teamTableScroll = new JScrollPane(teamTable);
+
+        JSplitPane teamSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, teamTableScroll, teamDetailPanel);
+        teamSplitPane.setDividerLocation(250);
+        teamSplitPane.setResizeWeight(0.7);
+        panel3.add(teamSplitPane, BorderLayout.CENTER);
+
+// Load team data
         for (String team : backend.getTeams()) {
             teamTableModel.addRow(new Object[]{team});
         }
+
+// Click listener for team rows
+        teamTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = teamTable.getSelectedRow();
+                if (row >= 0) {
+                    String teamName = (String) teamTableModel.getValueAt(row, 0);
+
+                    teamDetailPanel.removeAll();
+
+                    String logoPath = "/img/Team_Logos/" + teamName + ".jpg";
+                    java.net.URL logoURL = getClass().getResource(logoPath);
+                    JLabel logoLabel;
+
+                    if (logoURL != null) {
+                        ImageIcon originalIcon = new ImageIcon(logoURL);
+                        Image originalImage = originalIcon.getImage();
+                        int width = originalImage.getWidth(null);
+                        int height = originalImage.getHeight(null);
+                        int squareSize = Math.min(width, height);
+                        int x = (width - squareSize) / 2;
+                        int y = (height - squareSize) / 2;
+
+                        BufferedImage bufferedOriginal = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+                        Graphics2D g2d = bufferedOriginal.createGraphics();
+                        g2d.drawImage(originalImage, 0, 0, null);
+                        g2d.dispose();
+
+                        BufferedImage cropped = bufferedOriginal.getSubimage(x, y, squareSize, squareSize);
+                        Image scaledLogo = cropped.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+                        logoLabel = new JLabel(new ImageIcon(scaledLogo));
+                    } else {
+                        logoLabel = new JLabel("No logo found");
+                        logoLabel.setPreferredSize(new Dimension(120, 120));
+                        logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    }
+
+                    logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+                    JTextArea teamInfo = new JTextArea();
+                    teamInfo.setEditable(false);
+                    teamInfo.setFont(new Font("SansSerif", Font.PLAIN, 13));
+                    teamInfo.setText(
+                            "Team Name: " + teamName + "\n\n" +
+                                    "[More team stats, constructor standings, or history could go here.]"
+                    );
+
+                    JPanel teamContentPanel = new JPanel(new BorderLayout(10, 10));
+                    teamContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                    teamContentPanel.add(logoLabel, BorderLayout.WEST);
+                    teamContentPanel.add(new JScrollPane(teamInfo), BorderLayout.CENTER);
+
+                    teamDetailPanel.add(teamContentPanel, BorderLayout.CENTER);
+                    teamDetailPanel.revalidate();
+                    teamDetailPanel.repaint();
+                }
+            }
+        });
+
 
         // Add Tabs
         tabbedPane.addTab("Home", panel1);
