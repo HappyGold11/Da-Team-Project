@@ -21,7 +21,7 @@ Da-Team-Project/
 ├── pom.xml  # Maven project configuration
 └── README.md  # Project documentation
 ```
-
+*Subject to change over time.*
 ## 🔧 Installation & Setup
 ### **1. Prerequisites**
 - Java **17+** installed ([Download JDK](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html))
@@ -40,10 +40,7 @@ mvn clean install
 ```
 
 ### **4. Run the Application**
-To start the GUI application:
-```sh
-mvn exec:java -Dexec.mainClass="com.example.Frontend"
-```
+To start the GUI application.
 
 ## 🛠 Features
 ✅ **Search F1 drivers and teams**  
@@ -65,10 +62,3 @@ If you get **CSV loading errors**, ensure test CSVs are in `src/test/resources/c
 ```sh
 mvn clean install
 ```
-✔ Run using the correct package path:
-```sh
-mvn exec:java -Dexec.mainClass="com.example.Frontend"
-```
-
-### **Error: CSV files not loading in tests**
-✔ Move CSVs to `src/test/resources/csv/` and update `Backend.java` to check the test directory.
