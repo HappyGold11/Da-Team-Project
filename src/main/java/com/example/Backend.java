@@ -147,4 +147,30 @@ public class Backend {
     public boolean isTeamBookmarked(String name) {
         return bookmarkedTeams.contains(name);
     }
+
+    public boolean unbookmarkDriver(String name) {
+        if (!bookmarkedDrivers.contains(name)) return false;
+
+        bookmarkedDrivers.remove(name);
+        return overwriteFile(DRIVER_BOOKMARK_FILE, bookmarkedDrivers);
+    }
+
+    public boolean unbookmarkTeam(String name) {
+        if (!bookmarkedTeams.contains(name)) return false;
+
+        bookmarkedTeams.remove(name);
+        return overwriteFile(TEAM_BOOKMARK_FILE, bookmarkedTeams);
+    }
+
+    private boolean overwriteFile(String filename, Set<String> entries) {
+        try (FileWriter writer = new FileWriter(filename, false)) {
+            for (String entry : entries) {
+                writer.write(entry + "\n");
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

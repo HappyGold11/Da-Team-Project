@@ -16,8 +16,10 @@ public class Frontend {
     private DefaultTableModel teamTableModel;
     private JTable driverTable;
     private JTable teamTable;
-
     private JTextField searchBar;
+
+    private boolean showBookmarkedDriversOnly = false;
+    private boolean showBookmarkedTeamsOnly = false;
 
     public Frontend() {
         JFrame frame = new JFrame("F1 Database");
@@ -28,13 +30,11 @@ public class Frontend {
 
         // Top Navigation Buttons
         JPanel topPanel = new JPanel();
-        JButton button1 = new JButton("Bookmarked Drivers");
-        JButton button2 = new JButton("Bookmarked Teams");
+        JButton bookmarkToggleButton = new JButton("Show Bookmarked");
         JButton button3 = new JButton("Settings");
         JButton button4 = new JButton("Login");
         JButton button5 = new JButton("Register");
-        topPanel.add(button1);
-        topPanel.add(button2);
+        topPanel.add(bookmarkToggleButton);
         topPanel.add(button3);
         topPanel.add(button4);
         topPanel.add(button5);
@@ -53,7 +53,7 @@ public class Frontend {
                 "Name", "Team", "Wins", "Podiums", "Salary",
                 "Contract Ends", "Career Points", "Current Standing"
         };
-        DefaultTableModel driverTableModel = new DefaultTableModel(driverColumns, 0) {
+        driverTableModel = new DefaultTableModel(driverColumns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; // Makes all cells non-editable
@@ -144,18 +144,23 @@ public class Frontend {
                     );
 
                     // Make bookmark button
-                    JButton bookmarkButton = new JButton("Bookmark Driver");
+                    JButton bookmarkButton = new JButton();
                     if (backend.isDriverBookmarked(driverName)) {
-                        bookmarkButton.setText("Bookmarked ✔");
-                        bookmarkButton.setEnabled(false);
+                        bookmarkButton.setText("Unbookmark Driver");
                     } else {
-                        bookmarkButton.addActionListener(e -> {
-                            if (backend.bookmarkDriver(driverName)) {
-                                bookmarkButton.setText("Bookmarked ✔");
-                                bookmarkButton.setEnabled(false);
-                            }
-                        });
+                        bookmarkButton.setText("Bookmark Driver");
                     }
+
+                    bookmarkButton.addActionListener(e -> {
+                        if (backend.isDriverBookmarked(driverName)) {
+                            backend.unbookmarkDriver(driverName);
+                            bookmarkButton.setText("Bookmark Driver");
+                        } else {
+                            backend.bookmarkDriver(driverName);
+                            bookmarkButton.setText("Unbookmark Driver");
+                        }
+                        if (showBookmarkedDriversOnly) loadDriverData(true);
+                    });
 
                     JPanel contentPanel = new JPanel(new BorderLayout(10, 10));
                     contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -174,7 +179,7 @@ public class Frontend {
         JPanel panel3 = new JPanel(new BorderLayout());
 
         String[] teamColumns = {"Team"};
-        DefaultTableModel teamTableModel = new DefaultTableModel(teamColumns, 0) {
+        teamTableModel = new DefaultTableModel(teamColumns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; // Makes all cells non-editable
@@ -191,7 +196,7 @@ public class Frontend {
 
         JScrollPane teamTableScroll = new JScrollPane(teamTable);
 
-        JSplitPane teamSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, teamTableScroll, teamDetailPanel);
+        JSplitPane teamSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, teamTableScroll, teamDetailPanel);
         teamSplitPane.setDividerLocation(250);
         teamSplitPane.setResizeWeight(0.7);
         panel3.add(teamSplitPane, BorderLayout.CENTER);
@@ -248,60 +253,101 @@ public class Frontend {
                     );
 
                     // Bookmark Button
-                    JButton bookmarkTeamButton = new JButton("Bookmark Team");
-
+                    JButton bookmarkButton = new JButton();
                     if (backend.isTeamBookmarked(teamName)) {
-                        bookmarkTeamButton.setText("Bookmarked ✔");
-                        bookmarkTeamButton.setEnabled(false);
+                        bookmarkButton.setText("Unbookmark Team");
                     } else {
-                        bookmarkTeamButton.addActionListener(e -> {
-                            if (backend.bookmarkTeam(teamName)) {
-                                bookmarkTeamButton.setText("Bookmarked ✔");
-                                bookmarkTeamButton.setEnabled(false);
-                            }
-                        });
+                        bookmarkButton.setText("Bookmark Team");
                     }
 
+                    bookmarkButton.addActionListener(e -> {
+                        if (backend.isTeamBookmarked(teamName)) {
+                            backend.unbookmarkTeam(teamName);
+                            bookmarkButton.setText("Bookmark Team");
+                        } else {
+                            backend.bookmarkTeam(teamName);
+                            bookmarkButton.setText("Unbookmark Team");
+                        }
+                        if (showBookmarkedTeamsOnly) loadTeamData(true);
+                    });
 
+                    JPanel contentPanel = new JPanel(new BorderLayout(10, 10));
+                    contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                    contentPanel.add(logoLabel, BorderLayout.WEST);
+                    contentPanel.add(new JScrollPane(teamInfo), BorderLayout.CENTER);
+                    contentPanel.add(bookmarkButton, BorderLayout.SOUTH);
 
-                    JPanel teamContentPanel = new JPanel(new BorderLayout(10, 10));
-                    teamContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                    teamContentPanel.add(logoLabel, BorderLayout.WEST);
-                    teamContentPanel.add(new JScrollPane(teamInfo), BorderLayout.CENTER);
-                    teamContentPanel.add(bookmarkTeamButton, BorderLayout.SOUTH);
-
-                    teamDetailPanel.add(teamContentPanel, BorderLayout.CENTER);
+                    teamDetailPanel.add(contentPanel, BorderLayout.CENTER);
                     teamDetailPanel.revalidate();
                     teamDetailPanel.repaint();
                 }
             }
         });
 
+        bookmarkToggleButton.addActionListener(e -> {
+            boolean showingBookmarks = !showBookmarkedDriversOnly; // both flags are always synced
+            showBookmarkedDriversOnly = showingBookmarks;
+            showBookmarkedTeamsOnly = showingBookmarks;
 
-        // Add Tabs
+            bookmarkToggleButton.setText(showingBookmarks ? "Show All" : "Show Bookmarked");
+
+            int selectedTab = tabbedPane.getSelectedIndex();
+            if (selectedTab == 1) {
+                loadDriverData(showBookmarkedDriversOnly);
+            } else if (selectedTab == 2) {
+                loadTeamData(showBookmarkedTeamsOnly);
+            }
+        });
+
+
         tabbedPane.addTab("Home", panel1);
         tabbedPane.addTab("Drivers", panel2);
         tabbedPane.addTab("Teams", panel3);
+
+        // Refresh current tab when switching (to respect bookmark toggle)
+        tabbedPane.addChangeListener(e -> {
+            int selectedTab = tabbedPane.getSelectedIndex();
+            if (selectedTab == 1) {
+                loadDriverData(showBookmarkedDriversOnly);
+            } else if (selectedTab == 2) {
+                loadTeamData(showBookmarkedTeamsOnly);
+            }
+        });
 
         JPanel search = new JPanel();
         searchBar = new JTextField(10);
         JButton searchButton = new JButton("Search");
         search.add(searchBar);
         search.add(searchButton);
+        searchButton.addActionListener(e -> callSearch(searchBar.getText(), tabbedPane.getSelectedIndex()));
 
-        searchButton.addActionListener(e -> {
-            callSearch(searchBar.getText(), tabbedPane.getSelectedIndex());
-        });
-
-        // Login/Register Actions
         button4.addActionListener(e -> loginDialog());
         button5.addActionListener(e -> registerDialog());
 
-        // Final Frame Setup
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(tabbedPane, BorderLayout.CENTER);
         frame.add(search, BorderLayout.SOUTH);
         frame.setVisible(true);
+    }
+
+    private void loadDriverData(boolean onlyBookmarked) {
+        driverTableModel.setRowCount(0);
+        for (String line : backend.getDrivers()) {
+            if (line.toLowerCase().contains("name,team")) continue;
+            String[] row = Arrays.stream(line.split(",")).map(String::trim).toArray(String[]::new);
+            if (!onlyBookmarked || backend.isDriverBookmarked(row[0])) {
+                driverTableModel.addRow(row);
+            }
+        }
+    }
+
+    private void loadTeamData(boolean onlyBookmarked) {
+        teamTableModel.setRowCount(0);
+        for (String team : backend.getTeams()) {
+            if (!onlyBookmarked || backend.isTeamBookmarked(team)) {
+                teamTableModel.addRow(new Object[]{team});
+            }
+        }
     }
 
     private void styleTable(JTable table) {
