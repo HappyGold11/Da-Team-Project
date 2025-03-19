@@ -1,0 +1,88 @@
+<changelist name="Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]" date="1742337609494" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 2025-03-18, 6:37 p.m. [Changes]" />
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_21 p_m__[Changes]/TestingBackend.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/TestingBackend.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/example/Frontend.class" />
+    <option name="AFTER_PATH" value="target/classes/com/example/Frontend.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Frontend.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_21 p_m__[Changes]/Frontend.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Frontend1.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_21 p_m__[Changes]/Frontend1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Frontend11.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_21 p_m__[Changes]/Frontend2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Frontend2.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_21 p_m__[Changes]/Frontend3.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Frontend3.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_13 p_m__[Changes]1/Backend.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Backend.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_13 p_m__[Changes]1/Frontend.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Frontend4.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_21 p_m__[Changes]/TestingBackend1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/TestingBackend1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/example/Backend.class" />
+    <option name="AFTER_PATH" value="target/classes/com/example/Backend.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Backend1.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_21 p_m__[Changes]/Backend.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Backend2.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_13 p_m__[Changes]1/Frontend1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Frontend12.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_13 p_m__[Changes]1/Frontend2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Frontend21.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/test-classes/TestingBackend.class" />
+    <option name="AFTER_PATH" value="target/test-classes/TestingBackend.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/TestingBackend2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/test-classes/TestingFrontend.class" />
+    <option name="AFTER_PATH" value="target/test-classes/TestingFrontend.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/TestingFrontend.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_13 p_m__[Changes]1/TestingBackend.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/TestingBackend3.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_13 p_m__[Changes]1/Backend2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Backend21.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_13 p_m__[Changes]1/Backend1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Backend11.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_21 p_m__[Changes]/Backend1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Backend12.class" />
+  </binary>
+  <binary>
+    <option name="AFTER_PATH" value=".idea/shelf/Uncommitted_changes_before_Update_at_2025-03-13,_7_21 p_m__[Changes]/Backend2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025-03-18,_6_37 p_m__[Changes]/Backend22.class" />
+  </binary>
+</changelist>

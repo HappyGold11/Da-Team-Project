@@ -64,7 +64,33 @@ public class TestingBackend {
         assertEquals(team,backend.getPersonalTeamsList());
     }
 
+    //Test Registration
+    @Test
+    public void TestRegister() {
+        try {
+            Backend backend = new Backend();
+            List<String> loginInfo = new ArrayList<>();
+            backend.loadDataFromCSV("csv/Login.csv", loginInfo);
+            backend.register("csv/Login.csv", "Username, Password");
+            assertEquals("Username, Password", backend.getLogin());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-
-
+    //Test Login feature
+    @Test
+    public void TestLogin() {
+        try {
+            Backend backend = new Backend();
+            List<String> loginInfo = new ArrayList<>();
+            backend.loadDataFromCSV("csv/Login.csv", loginInfo);
+            for (String line : loginInfo) {
+                String[] info = line.split(",");
+                assertEquals("Successfully Logged In", backend.login(info[0], info[1])); //Login returns a String message when successful
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
