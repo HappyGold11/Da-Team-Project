@@ -100,7 +100,7 @@ public class Frontend {
 
                     detailPanel.removeAll();
 
-                    String imagePath = "/img/Head_Shots/" + driverName + ".jpg";
+                    String imagePath = "/img/Head_Shots/" + driverName + ".png";
                     java.net.URL imgURL = getClass().getResource(imagePath);
                     JLabel imageLabel;
 
@@ -215,7 +215,7 @@ public class Frontend {
 
                     teamDetailPanel.removeAll();
 
-                    String logoPath = "/img/Team_Logos/" + teamName + ".jpg";
+                    String logoPath = "/img.Team_Logos/" + teamName + ".png";
                     java.net.URL logoURL = getClass().getResource(logoPath);
                     JLabel logoLabel;
 

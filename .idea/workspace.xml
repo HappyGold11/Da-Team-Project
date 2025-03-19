@@ -5,17 +5,83 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bfdf1836-3a5b-47be-affc-d73d4ad2388e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img.Team_Logos/Alpine.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img.Team_Logos/Aston Martin.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img.Team_Logos/Ferrari.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img.Team_Logos/Haas.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img.Team_Logos/Kick Sauber.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img.Team_Logos/McLaren.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img.Team_Logos/Mercedes.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img.Team_Logos/Racing Bulls.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img.Team_Logos/Red Bull Racing.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img.Team_Logos/Williams.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Alexander Albon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Andrea Kimi Antonelli.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Carlos Sainz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Charles Leclerc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Estaban Ocon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Fernando Alonso.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Gabriel Bortoleto.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/George Russell.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Isack Hadjar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Jack Doohan.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Lance Stroll.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Lewis Hamilton.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Liam Lawson.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Max Verstappen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Nico Hulkenberg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Oilver Bearman.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Oscar Piastri.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Pierre Gasly.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Yuki Tsunoda.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/lando Norris.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bookmarked_drivers.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bookmarked_drivers.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookmarked_teams.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bookmarked_teams.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Backend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Backend.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Frontend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Frontend.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/Backend.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/Backend.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Alexander Albon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Andrea Kimi Antonelli.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Carlos Sainz.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Charles Leclerc.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Estaban Ocon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Fernando Alonso.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Gabriel Bortoleto.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/George Russell.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Isack Hadjar.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Jack Doohan.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Lance Stroll.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Lewis Hamilton.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Liam Lawson.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Max Verstappen.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Nico Hulkenberg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Oilver Bearman.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Oscar Piastri.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Pierre Gasly.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/Yuki Tsunoda.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/Head_Shots/lando Norris.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/Frontend$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/Frontend$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/Frontend$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/Frontend$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/Frontend$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/Frontend$4.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/Frontend$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/Frontend$5.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/Frontend.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/Frontend.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Alexander Albon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Andrea Kimi Antonelli.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Carlos Sainz.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Charles Leclerc.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Estaban Ocon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Fernando Alonso.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Gabriel Bortoleto.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/George Russell.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Isack Hadjar.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Jack Doohan.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Lance Stroll.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Lewis Hamilton.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Liam Lawson.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Max Verstappen.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Nico Hulkenberg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Oilver Bearman.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Oscar Piastri.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Pierre Gasly.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/Yuki Tsunoda.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/img/Head_Shots/lando Norris.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,39 +119,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Frontend.executor&quot;: &quot;Run&quot;,
-    &quot;Maven. [test].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.f1database [test].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tyner/csci2020u/Da-Team-Project/src/main/resources/img/Head_Shots&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Frontend.executor": "Run",
+    "Maven. [test].executor": "Run",
+    "Maven.f1database [test].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/tahoo/OneDrive/Desktop/Software design and analysis/Da-Team-Project/src/main/resources/img.Team_Logos",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\tahoo\OneDrive\Desktop\Software design and analysis\Da-Team-Project\src\main\resources\img.Team_Logos" />
+      <recent name="C:\Users\tahoo\OneDrive\Desktop\Software design and analysis\Da-Team-Project\src\main\resources\img\Head_Shots" />
       <recent name="C:\Users\tyner\csci2020u\Da-Team-Project\src\main\resources\img\Head_Shots" />
       <recent name="C:\Users\tyner\csci2020u\Da-Team-Project\lib" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tahoo\OneDrive\Desktop\Software design and analysis\Da-Team-Project\src\main\resources\img.Team_Logos" />
+      <recent name="C:\Users\tahoo\OneDrive\Desktop\Software design and analysis\Da-Team-Project\src\main\resources" />
+      <recent name="C:\Users\tahoo\OneDrive\Desktop\Software design and analysis\Da-Team-Project\img\Team_Logos" />
+      <recent name="C:\Users\tahoo\OneDrive\Desktop\Software design and analysis\Da-Team-Project\src\main\resources\img\Head_Shots" />
       <recent name="C:\Users\tyner\csci2020u\Da-Team-Project" />
-      <recent name="C:\Users\tyner\csci2020u\Da-Team-Project\test" />
-      <recent name="C:\Users\tyner\csci2020u\Da-Team-Project\.idea" />
-      <recent name="C:\Users\tyner\csci2020u\Da-Team-Project\.idea\libraries" />
-      <recent name="C:\Users\tyner\csci2020u\Da-Team-Project\img" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -94,15 +162,6 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -150,6 +209,15 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
       <method v="2" />
     </configuration>
   </component>
