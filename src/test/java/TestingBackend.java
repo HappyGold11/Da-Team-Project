@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestingBackend {
 
@@ -69,10 +70,9 @@ public class TestingBackend {
     public void TestRegister() {
         try {
             Backend backend = new Backend();
-            List<String> loginInfo = new ArrayList<>();
-            backend.loadDataFromCSV("csv/Login.csv", loginInfo);
-            backend.register("csv/Login.csv", "Username, Password");
-            assertEquals("Username, Password", backend.getLogin());
+            backend.register("csv/Login.csv", "Username", "Password"); //Register Username and password in Login database
+            String filteredLogin = backend.matchLogin("Username, Password"); //Takes a String value and searches in Login.csv for a match
+            assertEquals("Username, Password", filteredLogin); //Compares the entire line in database to match with the username and password
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
