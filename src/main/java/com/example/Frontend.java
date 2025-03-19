@@ -143,10 +143,25 @@ public class Frontend {
                                     "Current Standing: " + standing + "\n"
                     );
 
+                    // Make bookmark button
+                    JButton bookmarkButton = new JButton("Bookmark Driver");
+                    if (backend.isDriverBookmarked(driverName)) {
+                        bookmarkButton.setText("Bookmarked ✔");
+                        bookmarkButton.setEnabled(false);
+                    } else {
+                        bookmarkButton.addActionListener(e -> {
+                            if (backend.bookmarkDriver(driverName)) {
+                                bookmarkButton.setText("Bookmarked ✔");
+                                bookmarkButton.setEnabled(false);
+                            }
+                        });
+                    }
+
                     JPanel contentPanel = new JPanel(new BorderLayout(10, 10));
                     contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                     contentPanel.add(imageLabel, BorderLayout.NORTH);
                     contentPanel.add(new JScrollPane(detailText), BorderLayout.CENTER);
+                    contentPanel.add(bookmarkButton, BorderLayout.SOUTH);
 
                     detailPanel.add(contentPanel, BorderLayout.CENTER);
                     detailPanel.revalidate();
@@ -155,7 +170,7 @@ public class Frontend {
             }
         });
 
-// --- Teams Panel with Table and SplitPane ---
+        //Teams Panel with Table and SplitPane
         JPanel panel3 = new JPanel(new BorderLayout());
 
         String[] teamColumns = {"Team"};
@@ -181,12 +196,12 @@ public class Frontend {
         teamSplitPane.setResizeWeight(0.7);
         panel3.add(teamSplitPane, BorderLayout.CENTER);
 
-// Load team data
+        // Load team data
         for (String team : backend.getTeams()) {
             teamTableModel.addRow(new Object[]{team});
         }
 
-// Click listener for team rows
+        // Click listener for team rows
         teamTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = teamTable.getSelectedRow();
@@ -232,10 +247,28 @@ public class Frontend {
                                     "[More team stats, constructor standings, or history could go here.]"
                     );
 
+                    // Bookmark Button
+                    JButton bookmarkTeamButton = new JButton("Bookmark Team");
+
+                    if (backend.isTeamBookmarked(teamName)) {
+                        bookmarkTeamButton.setText("Bookmarked ✔");
+                        bookmarkTeamButton.setEnabled(false);
+                    } else {
+                        bookmarkTeamButton.addActionListener(e -> {
+                            if (backend.bookmarkTeam(teamName)) {
+                                bookmarkTeamButton.setText("Bookmarked ✔");
+                                bookmarkTeamButton.setEnabled(false);
+                            }
+                        });
+                    }
+
+
+
                     JPanel teamContentPanel = new JPanel(new BorderLayout(10, 10));
                     teamContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                     teamContentPanel.add(logoLabel, BorderLayout.WEST);
                     teamContentPanel.add(new JScrollPane(teamInfo), BorderLayout.CENTER);
+                    teamContentPanel.add(bookmarkTeamButton, BorderLayout.SOUTH);
 
                     teamDetailPanel.add(teamContentPanel, BorderLayout.CENTER);
                     teamDetailPanel.revalidate();

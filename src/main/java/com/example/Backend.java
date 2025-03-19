@@ -10,6 +10,11 @@ public class Backend {
     private List<String> teams;
     private List<String> personalDriversList;
     private List<String> personalTeamsList;
+    private final String DRIVER_BOOKMARK_FILE = "bookmarked_drivers.csv";
+    private final String TEAM_BOOKMARK_FILE = "bookmarked_teams.csv";
+
+    private Set<String> bookmarkedDrivers = new HashSet<>();
+    private Set<String> bookmarkedTeams = new HashSet<>();
 
     public Backend() {
         drivers = new ArrayList<>();
@@ -19,6 +24,8 @@ public class Backend {
         
         loadDataFromCSV("csv/Drivers.csv", drivers);
         loadDataFromCSV("csv/Teams.csv", teams);
+
+        loadBookmarks();
     }
 
     public void loadDataFromCSV(String fileName, List<String> list) {
@@ -85,5 +92,59 @@ public class Backend {
         return teams.stream()
                 .filter(team -> team.toLowerCase().contains(query))
                 .collect(Collectors.toList());
+    }
+
+    // Bookmarking Code
+    private void loadBookmarks() {
+        bookmarkedDrivers = loadFromFile(DRIVER_BOOKMARK_FILE);
+        bookmarkedTeams = loadFromFile(TEAM_BOOKMARK_FILE);
+    }
+
+    private Set<String> loadFromFile(String filename) {
+        Set<String> set = new HashSet<>();
+        File file = new File(filename);
+        if (!file.exists()) return set;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                set.add(line.trim());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return set;
+    }
+
+    public boolean bookmarkDriver(String name) {
+        if (bookmarkedDrivers.contains(name)) return false;
+
+        bookmarkedDrivers.add(name);
+        return appendToFile(DRIVER_BOOKMARK_FILE, name);
+    }
+
+    public boolean bookmarkTeam(String name) {
+        if (bookmarkedTeams.contains(name)) return false;
+
+        bookmarkedTeams.add(name);
+        return appendToFile(TEAM_BOOKMARK_FILE, name);
+    }
+
+    private boolean appendToFile(String filename, String entry) {
+        try (FileWriter writer = new FileWriter(filename, true)) {
+            writer.write(entry + "\n");
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean isDriverBookmarked(String name) {
+        return bookmarkedDrivers.contains(name);
+    }
+
+    public boolean isTeamBookmarked(String name) {
+        return bookmarkedTeams.contains(name);
     }
 }
