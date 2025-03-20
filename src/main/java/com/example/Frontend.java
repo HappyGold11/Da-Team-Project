@@ -215,7 +215,7 @@ public class Frontend {
 
                     teamDetailPanel.removeAll();
 
-                    String logoPath = "/img.Team_Logos/" + teamName + ".png";
+                    String logoPath = "/img/Team_Logos/" + teamName + ".png";
                     java.net.URL logoURL = getClass().getResource(logoPath);
                     JLabel logoLabel;
 

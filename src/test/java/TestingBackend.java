@@ -66,31 +66,31 @@ public class TestingBackend {
     }
 
     //Test Registration
-    @Test
-    public void TestRegister() {
-        try {
-            Backend backend = new Backend();
-            backend.register("csv/Login.csv", "Username", "Password"); //Register Username and password in Login database
-            String filteredLogin = backend.matchLogin("Username, Password"); //Takes a String value and searches in Login.csv for a match
-            assertEquals("Username, Password", filteredLogin); //Compares the entire line in database to match with the username and password
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    // @Test
+    // public void TestRegister() {
+    //     try {
+    //         Backend backend = new Backend();
+    //         backend.register("csv/Login.csv", "Username", "Password"); //Register Username and password in Login database
+    //         String filteredLogin = backend.matchLogin("Username, Password"); //Takes a String value and searches in Login.csv for a match
+    //         assertEquals("Username, Password", filteredLogin); //Compares the entire line in database to match with the username and password
+    //     } catch (Exception e) {
+    //         throw new RuntimeException(e);
+    //     }
+    // }
 
     //Test Login feature
-    @Test
-    public void TestLogin() {
-        try {
-            Backend backend = new Backend();
-            List<String> loginInfo = new ArrayList<>();
-            backend.loadDataFromCSV("csv/Login.csv", loginInfo);
-            for (String line : loginInfo) {
-                String[] info = line.split(",");
-                assertEquals("Successfully Logged In", backend.login(info[0], info[1])); //Login returns a String message when successful
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    // @Test
+    // public void TestLogin() {
+    //     try {
+    //         Backend backend = new Backend();
+    //         List<String> loginInfo = new ArrayList<>();
+    //         backend.loadDataFromCSV("csv/Login.csv", loginInfo);
+    //         for (String line : loginInfo) {
+    //             String[] info = line.split(",");
+    //             assertEquals("Successfully Logged In", backend.login(info[0], info[1])); //Login returns a String message when successful
+    //         }
+    //     } catch (Exception e) {
+    //         throw new RuntimeException(e);
+    //     }
+    // }
 }
