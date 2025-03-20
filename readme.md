@@ -30,7 +30,7 @@ Da-Team-Project/
 
 ### **2. Clone the Repository**
 ```sh
-git clone https://github.com/yourusername/Da-Team-Project.git
+git clone https://github.com/HappyGold11/Da-Team-Project
 cd Da-Team-Project
 ```
 
