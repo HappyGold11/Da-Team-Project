@@ -10,8 +10,8 @@ public class Backend {
     private List<String> teams;
     private List<String> personalDriversList;
     private List<String> personalTeamsList;
-    private final String DRIVER_BOOKMARK_FILE = "bookmarked_drivers.csv";
-    private final String TEAM_BOOKMARK_FILE = "bookmarked_teams.csv";
+    private final String DRIVER_BOOKMARK_FILE = "Bookmarks/bookmarked_drivers.csv";
+    private final String TEAM_BOOKMARK_FILE = "Bookmarks/bookmarked_teams.csv";
 
     private Set<String> bookmarkedDrivers = new HashSet<>();
     private Set<String> bookmarkedTeams = new HashSet<>();
