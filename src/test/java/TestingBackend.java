@@ -45,7 +45,7 @@ public class TestingBackend {
     }
 
     @Test
-    @Ignore public void TestDriverPersonalList(){
+    public void TestDriverPersonalList(){
         Backend backend = new Backend();
         List<String> dataList = new ArrayList<>();
         backend.loadDataFromCSV("csv/Drivers.csv", dataList);
@@ -56,11 +56,11 @@ public class TestingBackend {
     }
 
     @Test
-    @Ignore public void TestTeamPersonalList(){
+    public void TestTeamPersonalList(){
         Backend backend = new Backend();
         List<String> dataList = new ArrayList<>();
         backend.loadDataFromCSV("csv/Teams.csv", dataList);
-        backend.addTeamToPersonalList(dataList.get(3));
+        backend.addTeamToPersonalList(dataList.get(2));
         List<String> team = new ArrayList<>();
         team.add("Red Bull Racing");
         assertEquals(team,backend.getPersonalTeamsList());
