@@ -173,4 +173,11 @@ public class Backend {
             return false;
         }
     }
+
+    //Temp Methods to be finished later
+    public void register(String file, String user, String pass) {}
+
+    public String matchLogin(String login) {return "";}
+
+    public String login(String user, String pass) {return "";}
 }
