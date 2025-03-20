@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: TestingFrontend
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.460 s <<< FAILURE! -- in TestingFrontend
-TestingFrontend.testTeamSearchUpdatesListModel -- Time elapsed: 0.400 s <<< ERROR!
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 1.070 s <<< FAILURE! -- in TestingFrontend
+TestingFrontend.testTeamSearchUpdatesListModel -- Time elapsed: 1.001 s <<< ERROR!
 java.lang.reflect.InvocationTargetException
 	at java.desktop/java.awt.EventQueue.invokeAndWait(EventQueue.java:1371)
 	at java.desktop/java.awt.EventQueue.invokeAndWait(EventQueue.java:1346)
@@ -56,7 +56,7 @@ Caused by: java.lang.NoSuchFieldException: teamListModel
 	at TestingFrontend.getTeamListModel(TestingFrontend.java:59)
 	... 14 more
 
-TestingFrontend.testDriverSearchUpdatesListModel -- Time elapsed: 0.056 s <<< ERROR!
+TestingFrontend.testDriverSearchUpdatesListModel -- Time elapsed: 0.046 s <<< ERROR!
 java.lang.reflect.InvocationTargetException
 	at java.desktop/java.awt.EventQueue.invokeAndWait(EventQueue.java:1371)
 	at java.desktop/java.awt.EventQueue.invokeAndWait(EventQueue.java:1346)

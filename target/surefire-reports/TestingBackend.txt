@@ -1,14 +1,14 @@
 -------------------------------------------------------------------------------
 Test set: TestingBackend
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.072 s <<< FAILURE! -- in TestingBackend
-TestingBackend.TestTeamPersonalList -- Time elapsed: 0.012 s <<< FAILURE!
+Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! -- in TestingBackend
+TestingBackend.TestTeamPersonalList -- Time elapsed: 0 s <<< FAILURE!
 java.lang.AssertionError: expected:<[Red Bull Racing]> but was:<[Mercedes]>
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
 	at org.junit.Assert.assertEquals(Assert.java:120)
 	at org.junit.Assert.assertEquals(Assert.java:146)
-	at TestingBackend.TestTeamPersonalList(TestingBackend.java:64)
+	at TestingBackend.TestTeamPersonalList(TestingBackend.java:65)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
@@ -36,13 +36,13 @@ java.lang.AssertionError: expected:<[Red Bull Racing]> but was:<[Mercedes]>
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 
-TestingBackend.TestTeamSearch -- Time elapsed: 0.003 s <<< FAILURE!
+TestingBackend.TestTeamSearch -- Time elapsed: 0 s <<< FAILURE!
 java.lang.AssertionError: expected:<[Mercedes]> but was:<[Red Bull Racing]>
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
 	at org.junit.Assert.assertEquals(Assert.java:120)
 	at org.junit.Assert.assertEquals(Assert.java:146)
-	at TestingBackend.TestTeamSearch(TestingBackend.java:42)
+	at TestingBackend.TestTeamSearch(TestingBackend.java:43)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)

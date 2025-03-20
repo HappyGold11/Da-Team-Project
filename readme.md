@@ -8,20 +8,21 @@ The **F1 Database** is a Java-based application that allows users to view and se
 Da-Team-Project/
 ├── src/
 │   ├── main/java/com/example/
-│   │   ├── Backend.java  # Handles CSV data loading and search logic
-│   │   ├── Frontend.java  # Creates the GUI for users
+│   │   ├── Backend.java
+│   │   ├── Frontend.java
 │   ├── main/resources/csv/
-│   │   ├── Drivers.csv  # CSV file with F1 driver data
-│   │   ├── Teams.csv  # CSV file with F1 team data
+│   │   ├── Drivers.csv
+│   │   ├── Teams.csv
 │   ├── test/java/
-│   │   ├── TestingBackend.java  # JUnit tests for Backend
-│   │   ├── TestingFrontend.java  # JUnit tests for Frontend
+│   │   ├── TestingBackend.java
+│   │   ├── TestingFrontend.java
 │   ├── test/resources/csv/
-│   │   ├── test.csv  # Sample CSV for testing
-├── pom.xml  # Maven project configuration
-└── README.md  # Project documentation
+│   │   ├── test.csv
+├── pom.xml
+└── README.md
 ```
 *Subject to change over time.*
+
 ## 🔧 Installation & Setup
 ### **1. Prerequisites**
 - Java **17+** installed ([Download JDK](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html))
@@ -40,7 +41,7 @@ mvn clean install
 ```
 
 ### **4. Run the Application**
-To start the GUI application.
+To start the GUI application, execute the appropriate script based on your OS.
 
 ## 🛠 Features
 ✅ **Search F1 drivers and teams**  
@@ -62,3 +63,31 @@ If you get **CSV loading errors**, ensure test CSVs are in `src/test/resources/c
 ```sh
 mvn clean install
 ```
+
+## 🚀 Build & Deploy Scripts
+
+### **Windows (`build.bat`)**
+
+1. Place `build.bat` in the project root.
+2. Open **Command Prompt**, navigate to the project directory, and run:
+   ```cmd
+   build.bat
+   ```
+
+**Actions:**
+- Builds the project
+- Runs the JAR file
+
+### **Unix/Linux/macOS (`build.sh`)**
+
+1. Place `build.sh` in the project root.
+2. Grant execute permission and run:
+   ```sh
+   chmod +x build-run-deploy.sh
+   ./build-run-deploy.sh
+   ```
+
+**Actions:**
+- Builds the project
+- Runs the JAR file
+
