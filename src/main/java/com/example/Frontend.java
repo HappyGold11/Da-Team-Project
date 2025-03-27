@@ -1,26 +1,40 @@
 package com.example;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
 public class Frontend {
+    /**
+     * The Frontend class constructs the graphical user interface for the F1 database application.
+     * It sets up the main JFrame, builds interactive tabs for viewing driver and team data,
+     * and allows users to filter results and manage bookmarks through search and toggle functions.
+     */
+
+    // Backend instance to fetch and manage data
     Backend backend = new Backend();
 
-    private DefaultTableModel driverTableModel;
-    private DefaultTableModel teamTableModel;
-    private JTable driverTable;
-    private JTable teamTable;
-    private JTextField searchBar;
 
-    private boolean showBookmarkedDriversOnly = false;
-    private boolean showBookmarkedTeamsOnly = false;
+    // GUI Components
+    public DefaultTableModel driverTableModel;
+    public DefaultTableModel teamTableModel;
+    public JTable driverTable;
+    public JTable teamTable;
+    public JTextField searchBar;
 
+    // Flags to indicate whether only bookmarked items are shown
+    public boolean showBookmarkedDriversOnly = false;
+    public boolean showBookmarkedTeamsOnly = false;
+
+    // The main tabbed interface
+    private JTabbedPane tabbedPane;
+
+    /**
+     * Constructs the main GUI window including the top control panel, tabbed content,
+     * and search bar. Initializes and displays the frame.
+     */
     public Frontend() {
         JFrame frame = new JFrame("F1 Database");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,264 +42,44 @@ public class Frontend {
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
-        // Top Navigation Buttons
+        // Set window icon from resources
+        ImageIcon logo = new ImageIcon(getClass().getResource("/img/logo.png"));
+        frame.setIconImage(logo.getImage());
+
+        // Construct and add the main components
+        JPanel topPanel = buildTopPanel(frame);
+        tabbedPane = buildTabbedPane();
+        JPanel searchPanel = buildSearchPanel(tabbedPane);
+
+        frame.add(topPanel, BorderLayout.NORTH);
+        frame.add(tabbedPane, BorderLayout.CENTER);
+        frame.add(searchPanel, BorderLayout.SOUTH);
+        frame.setVisible(true);
+    }
+
+    /**
+     * Builds the top panel containing control buttons.
+     */
+    private JPanel buildTopPanel(JFrame frame) {
         JPanel topPanel = new JPanel();
+
         JButton bookmarkToggleButton = new JButton("Show Bookmarked");
         JButton button3 = new JButton("Settings");
         JButton button4 = new JButton("Login");
         JButton button5 = new JButton("Register");
+
         topPanel.add(bookmarkToggleButton);
         topPanel.add(button3);
         topPanel.add(button4);
         topPanel.add(button5);
 
-        // Tabbed Pane
-        JTabbedPane tabbedPane = new JTabbedPane();
+        // Register button actions for login and register dialogs
+        button4.addActionListener(e -> loginDialog());
+        button5.addActionListener(e -> registerDialog());
 
-        // Home Panel
-        JPanel panel1 = new JPanel();
-        panel1.add(new JLabel("Welcome to the Homepage"));
-
-        // Drivers Panel with Table and SplitPane
-        JPanel panel2 = new JPanel(new BorderLayout());
-
-        String[] driverColumns = {
-                "Name", "Team", "Wins", "Podiums", "Salary",
-                "Contract Ends", "Career Points", "Current Standing"
-        };
-        driverTableModel = new DefaultTableModel(driverColumns, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Makes all cells non-editable
-            }
-        };
-        driverTable = new JTable(driverTableModel);
-        styleTable(driverTable);
-
-        // Detail panel
-        JPanel detailPanel = new JPanel(new BorderLayout());
-        JLabel detailLabel = new JLabel("Select a driver to see more details...");
-        detailLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        detailLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        detailPanel.add(detailLabel, BorderLayout.CENTER);
-
-        JScrollPane tableScrollPane = new JScrollPane(driverTable);
-
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tableScrollPane, detailPanel);
-        splitPane.setDividerLocation(1000);
-        splitPane.setResizeWeight(0.7);
-        panel2.add(splitPane, BorderLayout.CENTER);
-
-        // Load driver data
-        List<String> allDrivers = backend.getDrivers();
-        for (int i = 1; i < allDrivers.size(); i++) { // Skip header
-            String[] rawRow = allDrivers.get(i).split(",");
-            String[] row = Arrays.stream(rawRow).map(String::trim).toArray(String[]::new);
-            driverTableModel.addRow(row);
-        }
-
-        // Add click listener to load square-cropped headshot + stats
-        driverTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int row = driverTable.getSelectedRow();
-                if (row >= 0) {
-                    String driverName = (String) driverTableModel.getValueAt(row, 0);
-                    String team = (String) driverTableModel.getValueAt(row, 1);
-                    String wins = (String) driverTableModel.getValueAt(row, 2);
-                    String podiums = (String) driverTableModel.getValueAt(row, 3);
-                    String salary = (String) driverTableModel.getValueAt(row, 4);
-                    String contractEnds = (String) driverTableModel.getValueAt(row, 5);
-                    String points = (String) driverTableModel.getValueAt(row, 6);
-                    String standing = (String) driverTableModel.getValueAt(row, 7);
-
-                    detailPanel.removeAll();
-
-                    String imagePath = "/img/Head_Shots/" + driverName + ".png";
-                    java.net.URL imgURL = getClass().getResource(imagePath);
-                    JLabel imageLabel;
-
-                    if (imgURL != null) {
-                        ImageIcon originalIcon = new ImageIcon(imgURL);
-                        Image originalImage = originalIcon.getImage();
-                        int width = originalImage.getWidth(null);
-                        int height = originalImage.getHeight(null);
-                        int squareSize = Math.min(width, height);
-                        int x = (width - squareSize) / 2;
-                        int y = (height - squareSize) / 2;
-
-                        BufferedImage bufferedOriginal = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-                        Graphics2D g2d = bufferedOriginal.createGraphics();
-                        g2d.drawImage(originalImage, 0, 0, null);
-                        g2d.dispose();
-
-                        BufferedImage cropped = bufferedOriginal.getSubimage(x, y, squareSize, squareSize);
-                        Image scaledImage = cropped.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-                        imageLabel = new JLabel(new ImageIcon(scaledImage));
-                    } else {
-                        imageLabel = new JLabel("No headshot found");
-                        imageLabel.setPreferredSize(new Dimension(120, 120));
-                        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                    }
-
-                    imageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-                    JTextArea detailText = new JTextArea();
-                    detailText.setEditable(false);
-                    detailText.setFont(new Font("SansSerif", Font.PLAIN, 13));
-                    detailText.setText(
-                            "Name: " + driverName + "\n" +
-                                    "Team: " + team + "\n" +
-                                    "Wins: " + wins + "\n" +
-                                    "Podiums: " + podiums + "\n" +
-                                    "Salary: " + salary + "\n" +
-                                    "Contract Ends: " + contractEnds + "\n" +
-                                    "Career Points: " + points + "\n" +
-                                    "Current Standing: " + standing + "\n"
-                    );
-
-                    // Make bookmark button
-                    JButton bookmarkButton = new JButton();
-                    if (backend.isDriverBookmarked(driverName)) {
-                        bookmarkButton.setText("Unbookmark Driver");
-                    } else {
-                        bookmarkButton.setText("Bookmark Driver");
-                    }
-
-                    bookmarkButton.addActionListener(e -> {
-                        if (backend.isDriverBookmarked(driverName)) {
-                            backend.unbookmarkDriver(driverName);
-                            bookmarkButton.setText("Bookmark Driver");
-                        } else {
-                            backend.bookmarkDriver(driverName);
-                            bookmarkButton.setText("Unbookmark Driver");
-                        }
-                        if (showBookmarkedDriversOnly) loadDriverData(true);
-                    });
-
-                    JPanel contentPanel = new JPanel(new BorderLayout(10, 10));
-                    contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                    contentPanel.add(imageLabel, BorderLayout.NORTH);
-                    contentPanel.add(new JScrollPane(detailText), BorderLayout.CENTER);
-                    contentPanel.add(bookmarkButton, BorderLayout.SOUTH);
-
-                    detailPanel.add(contentPanel, BorderLayout.CENTER);
-                    detailPanel.revalidate();
-                    detailPanel.repaint();
-                }
-            }
-        });
-
-        //Teams Panel with Table and SplitPane
-        JPanel panel3 = new JPanel(new BorderLayout());
-
-        String[] teamColumns = {"Team"};
-        teamTableModel = new DefaultTableModel(teamColumns, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Makes all cells non-editable
-            }
-        };
-        teamTable = new JTable(teamTableModel);
-        styleTable(teamTable);
-
-        JPanel teamDetailPanel = new JPanel(new BorderLayout());
-        JLabel teamDetailLabel = new JLabel("Select a team to see more details...");
-        teamDetailLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        teamDetailLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        teamDetailPanel.add(teamDetailLabel, BorderLayout.CENTER);
-
-        JScrollPane teamTableScroll = new JScrollPane(teamTable);
-
-        JSplitPane teamSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, teamTableScroll, teamDetailPanel);
-        teamSplitPane.setDividerLocation(250);
-        teamSplitPane.setResizeWeight(0.7);
-        panel3.add(teamSplitPane, BorderLayout.CENTER);
-
-        // Load team data
-        for (String team : backend.getTeams()) {
-            teamTableModel.addRow(new Object[]{team});
-        }
-
-        // Click listener for team rows
-        teamTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int row = teamTable.getSelectedRow();
-                if (row >= 0) {
-                    String teamName = (String) teamTableModel.getValueAt(row, 0);
-
-                    teamDetailPanel.removeAll();
-
-                    String logoPath = "/img/Team_Logos/" + teamName + ".png";
-                    java.net.URL logoURL = getClass().getResource(logoPath);
-                    JLabel logoLabel;
-
-                    if (logoURL != null) {
-                        ImageIcon originalIcon = new ImageIcon(logoURL);
-                        Image originalImage = originalIcon.getImage();
-                        int width = originalImage.getWidth(null);
-                        int height = originalImage.getHeight(null);
-                        int squareSize = Math.min(width, height);
-                        int x = (width - squareSize) / 2;
-                        int y = (height - squareSize) / 2;
-
-                        BufferedImage bufferedOriginal = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-                        Graphics2D g2d = bufferedOriginal.createGraphics();
-                        g2d.drawImage(originalImage, 0, 0, null);
-                        g2d.dispose();
-
-                        BufferedImage cropped = bufferedOriginal.getSubimage(x, y, squareSize, squareSize);
-                        Image scaledLogo = cropped.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-                        logoLabel = new JLabel(new ImageIcon(scaledLogo));
-                    } else {
-                        logoLabel = new JLabel("No logo found");
-                        logoLabel.setPreferredSize(new Dimension(120, 120));
-                        logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                    }
-
-                    logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-                    JTextArea teamInfo = new JTextArea();
-                    teamInfo.setEditable(false);
-                    teamInfo.setFont(new Font("SansSerif", Font.PLAIN, 13));
-                    teamInfo.setText(
-                            "Team Name: " + teamName + "\n\n" +
-                                    "[More team stats, constructor standings, or history could go here.]"
-                    );
-
-                    // Bookmark Button
-                    JButton bookmarkButton = new JButton();
-                    if (backend.isTeamBookmarked(teamName)) {
-                        bookmarkButton.setText("Unbookmark Team");
-                    } else {
-                        bookmarkButton.setText("Bookmark Team");
-                    }
-
-                    bookmarkButton.addActionListener(e -> {
-                        if (backend.isTeamBookmarked(teamName)) {
-                            backend.unbookmarkTeam(teamName);
-                            bookmarkButton.setText("Bookmark Team");
-                        } else {
-                            backend.bookmarkTeam(teamName);
-                            bookmarkButton.setText("Unbookmark Team");
-                        }
-                        if (showBookmarkedTeamsOnly) loadTeamData(true);
-                    });
-
-                    JPanel contentPanel = new JPanel(new BorderLayout(10, 10));
-                    contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                    contentPanel.add(logoLabel, BorderLayout.WEST);
-                    contentPanel.add(new JScrollPane(teamInfo), BorderLayout.CENTER);
-                    contentPanel.add(bookmarkButton, BorderLayout.SOUTH);
-
-                    teamDetailPanel.add(contentPanel, BorderLayout.CENTER);
-                    teamDetailPanel.revalidate();
-                    teamDetailPanel.repaint();
-                }
-            }
-        });
-
+        // Toggle between showing all entries and bookmarked entries
         bookmarkToggleButton.addActionListener(e -> {
-            boolean showingBookmarks = !showBookmarkedDriversOnly; // both flags are always synced
+            boolean showingBookmarks = !showBookmarkedDriversOnly;
             showBookmarkedDriversOnly = showingBookmarks;
             showBookmarkedTeamsOnly = showingBookmarks;
 
@@ -299,39 +93,100 @@ public class Frontend {
             }
         });
 
+        return topPanel;
+    }
 
-        tabbedPane.addTab("Home", panel1);
-        tabbedPane.addTab("Drivers", panel2);
-        tabbedPane.addTab("Teams", panel3);
+    /**
+     * Creates and configures the tabbed pane with "Home", "Drivers", and "Teams" tabs.
+     */
+    private JTabbedPane buildTabbedPane() {
+        tabbedPane = new JTabbedPane();
 
-        // Refresh current tab when switching (to respect bookmark toggle)
+        // Home tab placeholder
+        JPanel homePanel = new JPanel();
+        homePanel.add(new JLabel("Welcome to the Homepage"));
+
+        // Drivers tab setup
+        TableBundle driverBundle = DriverPanelFactory.create(backend, this);
+        driverTable = driverBundle.table;
+        driverTableModel = driverBundle.model;
+
+        // Teams tab setup
+        TableBundle teamBundle = TeamPanelFactory.create(backend, this);
+        teamTable = teamBundle.table;
+        teamTableModel = teamBundle.model;
+
+        tabbedPane.addTab("Home", homePanel);
+        tabbedPane.addTab("Drivers", driverBundle.panel);
+        tabbedPane.addTab("Teams", teamBundle.panel);
+
+        // Update table content depending on selected tab
         tabbedPane.addChangeListener(e -> {
             int selectedTab = tabbedPane.getSelectedIndex();
-            if (selectedTab == 1) {
-                loadDriverData(showBookmarkedDriversOnly);
-            } else if (selectedTab == 2) {
-                loadTeamData(showBookmarkedTeamsOnly);
-            }
+            if (selectedTab == 1) loadDriverData(showBookmarkedDriversOnly);
+            if (selectedTab == 2) loadTeamData(showBookmarkedTeamsOnly);
         });
 
+        return tabbedPane;
+    }
+
+    /**
+     * Builds the search bar and associated button.
+     */
+    private JPanel buildSearchPanel(JTabbedPane tabbedPane) {
         JPanel search = new JPanel();
         searchBar = new JTextField(10);
         JButton searchButton = new JButton("Search");
+
         search.add(searchBar);
         search.add(searchButton);
+
+        // Trigger appropriate search depending on active tab
         searchButton.addActionListener(e -> callSearch(searchBar.getText(), tabbedPane.getSelectedIndex()));
-
-        button4.addActionListener(e -> loginDialog());
-        button5.addActionListener(e -> registerDialog());
-
-        frame.add(topPanel, BorderLayout.NORTH);
-        frame.add(tabbedPane, BorderLayout.CENTER);
-        frame.add(search, BorderLayout.SOUTH);
-        frame.setVisible(true);
+        return search;
     }
 
-    private void loadDriverData(boolean onlyBookmarked) {
+    /**
+     * Routes search input to either the driver or team search method.
+     */
+    private void callSearch(String text, int selectedTab) {
+        if (selectedTab == 1) searchDrivers(text);
+        else if (selectedTab == 2) searchTeams(text);
+    }
+
+    /**
+     * Filters driver list based on query and updates the table.
+     */
+    public void searchDrivers(String query) {
+        List<String> filteredDrivers = backend.searchDrivers(query);
+        driverTableModel.setRowCount(0); // Clear existing rows
+
+        for (String line : filteredDrivers) {
+            if (line.toLowerCase().contains("name,team")) continue; // Skip header line
+            String[] rawRow = line.split(",");
+            String[] row = Arrays.stream(rawRow).map(String::trim).toArray(String[]::new);
+            driverTableModel.addRow(row);
+        }
+    }
+
+    /**
+     * Filters team list based on query and updates the table.
+     */
+    public void searchTeams(String query) {
+        List<String> filteredTeams = backend.searchTeams(query);
+        teamTableModel.setRowCount(0); // Clear existing rows
+
+        for (String team : filteredTeams) {
+            teamTableModel.addRow(new Object[]{team});
+        }
+    }
+
+    /**
+     * Loads and displays driver data in the table, filtered optionally by bookmark.
+     */
+    public void loadDriverData(boolean onlyBookmarked) {
         driverTableModel.setRowCount(0);
+
         for (String line : backend.getDrivers()) {
             if (line.toLowerCase().contains("name,team")) continue;
             String[] row = Arrays.stream(line.split(",")).map(String::trim).toArray(String[]::new);
@@ -341,8 +196,12 @@ public class Frontend {
         }
     }
 
-    private void loadTeamData(boolean onlyBookmarked) {
+    /**
+     * Loads and displays team data in the table, filtered optionally by bookmark.
+     */
+    public void loadTeamData(boolean onlyBookmarked) {
         teamTableModel.setRowCount(0);
+
         for (String team : backend.getTeams()) {
             if (!onlyBookmarked || backend.isTeamBookmarked(team)) {
                 teamTableModel.addRow(new Object[]{team});
@@ -350,70 +209,31 @@ public class Frontend {
         }
     }
 
-    private void styleTable(JTable table) {
-        JTableHeader header = table.getTableHeader();
-        header.setFont(new Font("SansSerif", Font.BOLD, 14));
-        header.setBackground(new Color(220, 220, 220));
-        header.setOpaque(true);
-
-        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable tbl, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(tbl, value, isSelected, hasFocus, row, column);
-                if (!isSelected) {
-                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
-                } else {
-                    c.setBackground(new Color(184, 207, 229));
-                }
-                return c;
-            }
-        });
-
-        table.setRowHeight(24);
-        table.setFont(new Font("SansSerif", Font.PLAIN, 13));
-    }
-
+    /**
+     * Displays a simple login form in a dialog.
+     */
     private static void loginDialog() {
         JTextField usernameField = new JTextField();
         JPasswordField passwordField = new JPasswordField();
         Object[] message = {"Username:", usernameField, "Password:", passwordField};
+
         JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
     }
 
+    /**
+     * Displays a simple registration form in a dialog.
+     */
     private static void registerDialog() {
         JTextField usernameField = new JTextField();
         JPasswordField passwordField = new JPasswordField();
         Object[] message = {"Username:", usernameField, "Password:", passwordField};
+
         JOptionPane.showConfirmDialog(null, message, "Register", JOptionPane.OK_CANCEL_OPTION);
     }
 
-    private void callSearch(String text, int selectedTab) {
-        if (selectedTab == 1) {
-            searchDrivers(text);
-        } else if (selectedTab == 2) {
-            searchTeams(text);
-        }
-    }
-
-    public void searchDrivers(String query) {
-        List<String> filteredDrivers = backend.searchDrivers(query);
-        driverTableModel.setRowCount(0);
-        for (String line : filteredDrivers) {
-            if (line.toLowerCase().contains("name,team")) continue;
-            String[] rawRow = line.split(",");
-            String[] row = Arrays.stream(rawRow).map(String::trim).toArray(String[]::new);
-            driverTableModel.addRow(row);
-        }
-    }
-
-    public void searchTeams(String query) {
-        List<String> filteredTeams = backend.searchTeams(query);
-        teamTableModel.setRowCount(0);
-        for (String team : filteredTeams) {
-            teamTableModel.addRow(new Object[]{team});
-        }
-    }
-
+    /**
+     * Launches the application.
+     */
     public static void main(String[] args) {
         new Frontend();
     }
