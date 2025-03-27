@@ -37,13 +37,20 @@ public class DriverPanelFactory {
 
         // Right-side detail panel with default instructional label
         JPanel detailPanel = new JPanel(new BorderLayout());
+        detailPanel.setBackground(new Color(20, 20, 20)); // Black background
+
         JLabel defaultLabel = new JLabel("Select a driver to see more details...");
         defaultLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
         defaultLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        defaultLabel.setForeground(Color.RED); // Red text
+
         detailPanel.add(defaultLabel, BorderLayout.CENTER);
+
 
         // Combine the table and detail panel using JSplitPane
         JScrollPane tableScrollPane = new JScrollPane(table);
+        tableScrollPane.getViewport().setBackground(new Color(20, 20, 20)); // Match table bg
+        tableScrollPane.setBackground(new Color(20, 20, 20));
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tableScrollPane, detailPanel);
         splitPane.setDividerLocation(1000); // Width allocation for table vs. detail view
         splitPane.setResizeWeight(0.7); // Resize ratio when window changes size
@@ -85,26 +92,34 @@ public class DriverPanelFactory {
      * Styles the driver JTable with alternating row colors, header formatting, and font settings.
      */
     private static void styleTable(JTable table) {
+        // Header style
         JTableHeader header = table.getTableHeader();
         header.setFont(new Font("SansSerif", Font.BOLD, 14));
-        header.setBackground(new Color(220, 220, 220));
+        header.setBackground(new Color(30, 30, 30));
+        header.setForeground(Color.RED);
 
+        // Table cells styling
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable tbl, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(tbl, value, isSelected, hasFocus, row, column);
-                if (!isSelected) {
-                    // Alternate row background
-                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
+                c.setForeground(Color.RED);
+                c.setFont(new Font("SansSerif", Font.PLAIN, 13));
+
+                if (isSelected) {
+                    c.setBackground(new Color(70, 0, 0)); // Dark red highlight
                 } else {
-                    // Highlight selected row
-                    c.setBackground(new Color(184, 207, 229));
+                    c.setBackground(row % 2 == 0 ? new Color(20, 20, 20) : new Color(30, 30, 30)); // Alternating dark rows
                 }
+
                 return c;
             }
         });
 
         table.setRowHeight(24);
-        table.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        table.setBackground(Color.BLACK);
+        table.setForeground(Color.RED);
+        table.setGridColor(Color.RED);
+        table.setSelectionForeground(Color.WHITE); // Optional for contrast
     }
 }

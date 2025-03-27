@@ -13,6 +13,11 @@ public class Frontend {
      * and allows users to filter results and manage bookmarks through search and toggle functions.
      */
 
+    private final Color backgroundColor = new Color(20, 20, 20);
+    private final Color foregroundColor = Color.RED;
+    private final Color buttonColor = new Color(50, 0, 0);
+    private final Color tableHeaderColor = new Color(30, 30, 30);
+
     // Backend instance to fetch and manage data
     Backend backend = new Backend();
 
@@ -42,6 +47,11 @@ public class Frontend {
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
+        frame.getContentPane().setBackground(backgroundColor);
+        UIManager.put("TabbedPane.selected", backgroundColor);
+        UIManager.put("TabbedPane.contentAreaColor", backgroundColor);
+        UIManager.put("TabbedPane.foreground", foregroundColor);
+
         // Set window icon from resources
         ImageIcon logo = new ImageIcon(getClass().getResource("/img/logo.png"));
         frame.setIconImage(logo.getImage());
@@ -62,16 +72,18 @@ public class Frontend {
      */
     private JPanel buildTopPanel(JFrame frame) {
         JPanel topPanel = new JPanel();
+        topPanel.setBackground(backgroundColor);
 
-        JButton bookmarkToggleButton = new JButton("Show Bookmarked");
-        JButton button3 = new JButton("Settings");
-        JButton button4 = new JButton("Login");
-        JButton button5 = new JButton("Register");
+        JButton bookmarkToggleButton = createStyledButton("Show Bookmarked");
+        JButton button3 = createStyledButton("Settings");
+        JButton button4 = createStyledButton("Login");
+        JButton button5 = createStyledButton("Register");
 
         topPanel.add(bookmarkToggleButton);
         topPanel.add(button3);
         topPanel.add(button4);
         topPanel.add(button5);
+
 
         // Register button actions for login and register dialogs
         button4.addActionListener(e -> loginDialog());
@@ -96,6 +108,16 @@ public class Frontend {
         return topPanel;
     }
 
+    // Helper method for buildTopPanel()
+    private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
+        button.setBackground(buttonColor);
+        button.setForeground(foregroundColor);
+        button.setFocusPainted(false);
+        return button;
+    }
+
+
     /**
      * Creates and configures the tabbed pane with "Home", "Drivers", and "Teams" tabs.
      */
@@ -109,11 +131,13 @@ public class Frontend {
         TableBundle driverBundle = DriverPanelFactory.create(backend, this);
         driverTable = driverBundle.table;
         driverTableModel = driverBundle.model;
+        styleTable(driverTable);
 
         // Teams tab setup
         TableBundle teamBundle = TeamPanelFactory.create(backend, this);
         teamTable = teamBundle.table;
         teamTableModel = teamBundle.model;
+        styleTable(teamTable);
 
         tabbedPane.addTab("Home", homePanel);
         tabbedPane.addTab("Drivers", driverBundle.panel);
@@ -129,13 +153,33 @@ public class Frontend {
         return tabbedPane;
     }
 
+    // Helper method for buildTabbedPane()
+    private void styleTable(JTable table) {
+        table.setBackground(backgroundColor);
+        table.setForeground(foregroundColor);
+        table.setSelectionBackground(Color.DARK_GRAY);
+        table.setSelectionForeground(foregroundColor);
+        table.setGridColor(Color.RED);
+        table.setFont(new Font("Arial", Font.PLAIN, 14));
+        table.getTableHeader().setBackground(tableHeaderColor);
+        table.getTableHeader().setForeground(foregroundColor);
+        table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+    }
+
+
     /**
      * Builds the search bar and associated button.
      */
     private JPanel buildSearchPanel(JTabbedPane tabbedPane) {
         JPanel search = new JPanel();
+        search.setBackground(backgroundColor);
+
         searchBar = new JTextField(10);
-        JButton searchButton = new JButton("Search");
+        searchBar.setBackground(Color.BLACK);
+        searchBar.setForeground(foregroundColor);
+        searchBar.setCaretColor(foregroundColor);
+
+        JButton searchButton = createStyledButton("Search");
 
         search.add(searchBar);
         search.add(searchButton);

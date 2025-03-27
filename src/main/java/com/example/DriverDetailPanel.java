@@ -12,6 +12,7 @@ class DriverDetailPanel extends JPanel {
      */
     public DriverDetailPanel(String driverName, String[] data, Backend backend, Frontend frontend) {
         super(new BorderLayout(10, 10));
+        setBackground(new Color(20, 20, 20)); // Black background
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Image of driver (headshot), driver stats, and a bookmark toggle button
@@ -19,9 +20,14 @@ class DriverDetailPanel extends JPanel {
         JTextArea detailText = buildDriverText(data);
         JButton bookmarkButton = buildBookmarkButton(driverName, backend, frontend);
 
-        // Layout for detail panel
+        // Layout
         add(imageLabel, BorderLayout.NORTH);
-        add(new JScrollPane(detailText), BorderLayout.CENTER);
+
+        JScrollPane scrollPane = new JScrollPane(detailText);
+        scrollPane.setBackground(new Color(20, 20, 20));
+        scrollPane.getViewport().setBackground(new Color(20, 20, 20));
+        add(scrollPane, BorderLayout.CENTER);
+
         add(bookmarkButton, BorderLayout.SOUTH);
     }
 
@@ -58,6 +64,10 @@ class DriverDetailPanel extends JPanel {
         JTextArea text = new JTextArea();
         text.setEditable(false);
         text.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        text.setForeground(Color.RED);
+        text.setBackground(new Color(20, 20, 20));
+        text.setCaretColor(Color.RED);
+
         text.setText(
                 "Name: " + data[0] + "\n" +
                         "Team: " + data[1] + "\n" +
@@ -76,6 +86,9 @@ class DriverDetailPanel extends JPanel {
      */
     private JButton buildBookmarkButton(String driverName, Backend backend, Frontend frontend) {
         JButton button = new JButton(backend.isDriverBookmarked(driverName) ? "Unbookmark Driver" : "Bookmark Driver");
+        button.setBackground(new Color(50, 0, 0));
+        button.setForeground(Color.RED);
+        button.setFocusPainted(false);
 
         button.addActionListener(e -> {
             if (backend.isDriverBookmarked(driverName)) {
@@ -85,7 +98,6 @@ class DriverDetailPanel extends JPanel {
                 backend.bookmarkDriver(driverName);
                 button.setText("Unbookmark Driver");
             }
-            // Refresh list if in bookmarked-only view
             if (frontend != null && frontend.showBookmarkedDriversOnly) {
                 frontend.searchDrivers("");
             }

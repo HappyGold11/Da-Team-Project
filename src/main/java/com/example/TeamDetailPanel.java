@@ -33,8 +33,13 @@ class TeamDetailPanel extends JPanel {
         if (logoURL != null) {
             ImageIcon originalIcon = new ImageIcon(logoURL);
             Image originalImage = originalIcon.getImage();
-            BufferedImage cropped = ImageUtils.cropSquare(originalImage);
-            Image scaled = cropped.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+
+            // Calculate the height based on the aspect ratio
+            int newWidth = 250;
+            int newHeight = (int) (originalImage.getHeight(null) * ((double) newWidth / originalImage.getWidth(null)));
+
+            // Scale the image to the new dimensions while preserving the aspect ratio
+            Image scaled = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
             logoLabel = new JLabel(new ImageIcon(scaled));
         } else {
             logoLabel = new JLabel("No logo found");
@@ -81,4 +86,6 @@ class TeamDetailPanel extends JPanel {
 
         return button;
     }
+
+
 }
