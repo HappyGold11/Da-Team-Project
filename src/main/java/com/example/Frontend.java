@@ -102,9 +102,8 @@ public class Frontend {
     private JTabbedPane buildTabbedPane() {
         tabbedPane = new JTabbedPane();
 
-        // Home tab placeholder
-        JPanel homePanel = new JPanel();
-        homePanel.add(new JLabel("Welcome to the Homepage"));
+        // Home tab class caller
+        JPanel homePanel = HomePanelFactory.create();
 
         // Drivers tab setup
         TableBundle driverBundle = DriverPanelFactory.create(backend, this);
