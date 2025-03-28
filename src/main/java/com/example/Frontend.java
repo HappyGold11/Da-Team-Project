@@ -2,25 +2,25 @@ package com.example;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
 public class Frontend {
     /**
-     * The Frontend class constructs the graphical user interface for the F1 database application.
-     * It sets up the main JFrame, builds interactive tabs for viewing driver and team data,
-     * and allows users to filter results and manage bookmarks through search and toggle functions.
+     * Constructs the graphical interface for the F1 database app,
+     * including theme colors, tab navigation, data loading, search, and bookmark filtering.
      */
 
+    // Color Theme
     private final Color backgroundColor = new Color(20, 20, 20);
-    private final Color foregroundColor = Color.RED;
-    private final Color buttonColor = new Color(50, 0, 0);
+    private final Color foregroundColor = Color.WHITE;
+    private final Color buttonColor = new Color(225, 6, 0);
     private final Color tableHeaderColor = new Color(30, 30, 30);
 
-    // Backend instance to fetch and manage data
+    // Backend for data management
     Backend backend = new Backend();
-
 
     // GUI Components
     public DefaultTableModel driverTableModel;
@@ -28,17 +28,12 @@ public class Frontend {
     public JTable driverTable;
     public JTable teamTable;
     public JTextField searchBar;
-
-    // Flags to indicate whether only bookmarked items are shown
     public boolean showBookmarkedDriversOnly = false;
     public boolean showBookmarkedTeamsOnly = false;
-
-    // The main tabbed interface
     private JTabbedPane tabbedPane;
 
     /**
-     * Constructs the main GUI window including the top control panel, tabbed content,
-     * and search bar. Initializes and displays the frame.
+     * Sets up the main JFrame, builds tabbed content, top bar, and search panel.
      */
     public Frontend() {
         JFrame frame = new JFrame("F1 Database");
@@ -46,17 +41,13 @@ public class Frontend {
         frame.setSize(1500, 700);
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
-
         frame.getContentPane().setBackground(backgroundColor);
-        UIManager.put("TabbedPane.selected", backgroundColor);
-        UIManager.put("TabbedPane.contentAreaColor", backgroundColor);
-        UIManager.put("TabbedPane.foreground", foregroundColor);
 
-        // Set window icon from resources
+        // Set application icon
         ImageIcon logo = new ImageIcon(getClass().getResource("/img/logo.png"));
         frame.setIconImage(logo.getImage());
 
-        // Construct and add the main components
+        // Build and add components
         JPanel topPanel = buildTopPanel(frame);
         tabbedPane = buildTabbedPane();
         JPanel searchPanel = buildSearchPanel(tabbedPane);
@@ -68,7 +59,7 @@ public class Frontend {
     }
 
     /**
-     * Builds the top panel containing control buttons.
+     * Creates the top button bar with toggle and user controls.
      */
     private JPanel buildTopPanel(JFrame frame) {
         JPanel topPanel = new JPanel();
@@ -84,12 +75,9 @@ public class Frontend {
         topPanel.add(button4);
         topPanel.add(button5);
 
-
-        // Register button actions for login and register dialogs
         button4.addActionListener(e -> loginDialog());
         button5.addActionListener(e -> registerDialog());
 
-        // Toggle between showing all entries and bookmarked entries
         bookmarkToggleButton.addActionListener(e -> {
             boolean showingBookmarks = !showBookmarkedDriversOnly;
             showBookmarkedDriversOnly = showingBookmarks;
@@ -98,17 +86,16 @@ public class Frontend {
             bookmarkToggleButton.setText(showingBookmarks ? "Show All" : "Show Bookmarked");
 
             int selectedTab = tabbedPane.getSelectedIndex();
-            if (selectedTab == 1) {
-                loadDriverData(showBookmarkedDriversOnly);
-            } else if (selectedTab == 2) {
-                loadTeamData(showBookmarkedTeamsOnly);
-            }
+            if (selectedTab == 1) loadDriverData(showBookmarkedDriversOnly);
+            else if (selectedTab == 2) loadTeamData(showBookmarkedTeamsOnly);
         });
 
         return topPanel;
     }
 
-    // Helper method for buildTopPanel()
+    /**
+     * Utility to create red-themed buttons.
+     */
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setBackground(buttonColor);
@@ -117,23 +104,36 @@ public class Frontend {
         return button;
     }
 
-
     /**
-     * Creates and configures the tabbed pane with "Home", "Drivers", and "Teams" tabs.
+     * Builds the tabbed view for Home, Drivers, and Teams with custom styling.
      */
     private JTabbedPane buildTabbedPane() {
         tabbedPane = new JTabbedPane();
 
-        // Home tab class caller
-        JPanel homePanel = HomePanelFactory.create();
+        // Custom tab UI to paint unselected tabs red
+        tabbedPane.setUI(new BasicTabbedPaneUI() {
+            @Override
+            protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex,
+                                              int x, int y, int w, int h, boolean isSelected) {
+                g.setColor(isSelected ? backgroundColor : Color.RED);
+                g.fillRect(x, y, w, h);
+            }
 
-        // Drivers tab setup
+            @Override
+            protected void paintText(Graphics g, int tabPlacement, Font font, FontMetrics metrics,
+                                     int tabIndex, String title, Rectangle textRect, boolean isSelected) {
+                g.setFont(font);
+                g.setColor(Color.WHITE);
+                g.drawString(title, textRect.x, textRect.y + metrics.getAscent());
+            }
+        });
+
+        JPanel homePanel = HomePanelFactory.create();
         TableBundle driverBundle = DriverPanelFactory.create(backend, this);
         driverTable = driverBundle.table;
         driverTableModel = driverBundle.model;
         styleTable(driverTable);
 
-        // Teams tab setup
         TableBundle teamBundle = TeamPanelFactory.create(backend, this);
         teamTable = teamBundle.table;
         teamTableModel = teamBundle.model;
@@ -143,17 +143,18 @@ public class Frontend {
         tabbedPane.addTab("Drivers", driverBundle.panel);
         tabbedPane.addTab("Teams", teamBundle.panel);
 
-        // Update table content depending on selected tab
         tabbedPane.addChangeListener(e -> {
             int selectedTab = tabbedPane.getSelectedIndex();
             if (selectedTab == 1) loadDriverData(showBookmarkedDriversOnly);
-            if (selectedTab == 2) loadTeamData(showBookmarkedTeamsOnly);
+            else if (selectedTab == 2) loadTeamData(showBookmarkedTeamsOnly);
         });
 
         return tabbedPane;
     }
 
-    // Helper method for buildTabbedPane()
+    /**
+     * Applies consistent styling to all tables.
+     */
     private void styleTable(JTable table) {
         table.setBackground(backgroundColor);
         table.setForeground(foregroundColor);
@@ -166,9 +167,8 @@ public class Frontend {
         table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
     }
 
-
     /**
-     * Builds the search bar and associated button.
+     * Builds the search bar and search button.
      */
     private JPanel buildSearchPanel(JTabbedPane tabbedPane) {
         JPanel search = new JPanel();
@@ -184,13 +184,13 @@ public class Frontend {
         search.add(searchBar);
         search.add(searchButton);
 
-        // Trigger appropriate search depending on active tab
         searchButton.addActionListener(e -> callSearch(searchBar.getText(), tabbedPane.getSelectedIndex()));
+
         return search;
     }
 
     /**
-     * Routes search input to either the driver or team search method.
+     * Routes the search text to the appropriate tab.
      */
     private void callSearch(String text, int selectedTab) {
         if (selectedTab == 1) searchDrivers(text);
@@ -198,14 +198,14 @@ public class Frontend {
     }
 
     /**
-     * Filters driver list based on query and updates the table.
+     * Searches drivers and updates the driver table.
      */
     public void searchDrivers(String query) {
         List<String> filteredDrivers = backend.searchDrivers(query);
-        driverTableModel.setRowCount(0); // Clear existing rows
+        driverTableModel.setRowCount(0);
 
         for (String line : filteredDrivers) {
-            if (line.toLowerCase().contains("name,team")) continue; // Skip header line
+            if (line.toLowerCase().contains("name,team")) continue;
             String[] rawRow = line.split(",");
             String[] row = Arrays.stream(rawRow).map(String::trim).toArray(String[]::new);
             driverTableModel.addRow(row);
@@ -213,23 +213,21 @@ public class Frontend {
     }
 
     /**
-     * Filters team list based on query and updates the table.
+     * Searches teams and updates the team table.
      */
     public void searchTeams(String query) {
         List<String> filteredTeams = backend.searchTeams(query);
-        teamTableModel.setRowCount(0); // Clear existing rows
-
+        teamTableModel.setRowCount(0);
         for (String team : filteredTeams) {
             teamTableModel.addRow(new Object[]{team});
         }
     }
 
     /**
-     * Loads and displays driver data in the table, filtered optionally by bookmark.
+     * Loads driver data with optional filtering by bookmark.
      */
     public void loadDriverData(boolean onlyBookmarked) {
         driverTableModel.setRowCount(0);
-
         for (String line : backend.getDrivers()) {
             if (line.toLowerCase().contains("name,team")) continue;
             String[] row = Arrays.stream(line.split(",")).map(String::trim).toArray(String[]::new);
@@ -240,11 +238,10 @@ public class Frontend {
     }
 
     /**
-     * Loads and displays team data in the table, filtered optionally by bookmark.
+     * Loads team data with optional filtering by bookmark.
      */
     public void loadTeamData(boolean onlyBookmarked) {
         teamTableModel.setRowCount(0);
-
         for (String team : backend.getTeams()) {
             if (!onlyBookmarked || backend.isTeamBookmarked(team)) {
                 teamTableModel.addRow(new Object[]{team});
@@ -253,31 +250,29 @@ public class Frontend {
     }
 
     /**
-     * Displays a simple login form in a dialog.
+     * Simple login form popup.
      */
     private static void loginDialog() {
         JTextField usernameField = new JTextField();
         JPasswordField passwordField = new JPasswordField();
         Object[] message = {"Username:", usernameField, "Password:", passwordField};
-
         JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
     }
 
     /**
-     * Displays a simple registration form in a dialog.
+     * Simple registration form popup.
      */
     private static void registerDialog() {
         JTextField usernameField = new JTextField();
         JPasswordField passwordField = new JPasswordField();
         Object[] message = {"Username:", usernameField, "Password:", passwordField};
-
         JOptionPane.showConfirmDialog(null, message, "Register", JOptionPane.OK_CANCEL_OPTION);
     }
 
     /**
-     * Launches the application.
+     * Launch entry point.
      */
     public static void main(String[] args) {
-        new Frontend();
+        SwingUtilities.invokeLater(Frontend::new);
     }
 }

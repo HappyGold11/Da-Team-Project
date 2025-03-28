@@ -14,6 +14,8 @@ class TeamPanelFactory {
     public static TableBundle create(Backend backend, Frontend frontend) {
         JPanel panel = new JPanel(new BorderLayout());
 
+        panel.setBackground(Color.BLACK);
+
         // Define columns (only one for team name)
         String[] columns = {"Team"};
 
@@ -35,6 +37,11 @@ class TeamPanelFactory {
         detailPanel.add(defaultLabel, BorderLayout.CENTER);
 
         JScrollPane tableScrollPane = new JScrollPane(table);
+
+        // Apply background color to the viewport and scrollpane
+        tableScrollPane.getViewport().setBackground(new Color(20, 20, 20)); // dark background
+        tableScrollPane.setBackground(new Color(20, 20, 20));
+
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tableScrollPane, detailPanel);
         splitPane.setDividerLocation(250);
         splitPane.setResizeWeight(0.7);
@@ -64,27 +71,37 @@ class TeamPanelFactory {
     }
 
     /**
-     * Applies alternating row styles and font customization to team table.
+     * Styles the driver JTable with alternating row colors, header formatting, and font settings.
      */
     private static void styleTable(JTable table) {
+        // Header style
         JTableHeader header = table.getTableHeader();
         header.setFont(new Font("SansSerif", Font.BOLD, 14));
-        header.setBackground(new Color(220, 220, 220));
+        header.setBackground(new Color(30, 30, 30));
+        header.setForeground(Color.RED);
 
+        // Table cells styling
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable tbl, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(tbl, value, isSelected, hasFocus, row, column);
-                if (!isSelected) {
-                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
+                c.setForeground(Color.WHITE);
+                c.setFont(new Font("SansSerif", Font.PLAIN, 13));
+
+                if (isSelected) {
+                    c.setBackground(new Color(70, 0, 0)); // Dark red highlight
                 } else {
-                    c.setBackground(new Color(184, 207, 229));
+                    c.setBackground(row % 2 == 0 ? new Color(20, 20, 20) : new Color(30, 30, 30)); // Alternating dark rows
                 }
+
                 return c;
             }
         });
 
         table.setRowHeight(24);
-        table.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        table.setBackground(Color.BLACK);
+        table.setForeground(Color.RED);
+        table.setGridColor(Color.RED);
+        table.setSelectionForeground(Color.BLACK); // Optional for contrast
     }
 }

@@ -11,4 +11,5 @@ com\example\Backend.class
 com\example\DriverPanelFactory.class
 com\example\ImageUtils.class
 com\example\TeamPanelFactory.class
+com\example\Frontend$1.class
 com\example\TeamDetailPanel.class
