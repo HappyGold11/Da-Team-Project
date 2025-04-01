@@ -139,9 +139,12 @@ public class Frontend {
         teamTableModel = teamBundle.model;
         styleTable(teamTable);
 
+        FAQPage faqPage = new FAQPage();
+
         tabbedPane.addTab("Home", homePanel);
         tabbedPane.addTab("Drivers", driverBundle.panel);
         tabbedPane.addTab("Teams", teamBundle.panel);
+        tabbedPane.addTab("FAQ", faqPage.panel);
 
         tabbedPane.addChangeListener(e -> {
             int selectedTab = tabbedPane.getSelectedIndex();
