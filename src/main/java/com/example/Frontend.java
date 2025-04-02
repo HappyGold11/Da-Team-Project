@@ -221,8 +221,12 @@ public class Frontend {
     public void searchTeams(String query) {
         List<String> filteredTeams = backend.searchTeams(query);
         teamTableModel.setRowCount(0);
-        for (String team : filteredTeams) {
-            teamTableModel.addRow(new Object[]{team});
+
+        for (String line : filteredTeams) {
+            if (line.toLowerCase().contains("name,standing")) continue;
+            String[] rawRow = line.split(",");
+            String[] row = Arrays.stream(rawRow).map(String::trim).toArray(String[]::new);
+            teamTableModel.addRow(row);
         }
     }
 
@@ -245,9 +249,11 @@ public class Frontend {
      */
     public void loadTeamData(boolean onlyBookmarked) {
         teamTableModel.setRowCount(0);
-        for (String team : backend.getTeams()) {
-            if (!onlyBookmarked || backend.isTeamBookmarked(team)) {
-                teamTableModel.addRow(new Object[]{team});
+        for (String line : backend.getTeams()) {
+            if (line.toLowerCase().contains("name,standing")) continue;
+            String[] row = Arrays.stream(line.split(",")).map(String::trim).toArray(String[]::new);
+            if (!onlyBookmarked || backend.isTeamBookmarked(row[0])) {
+                teamTableModel.addRow(row);
             }
         }
     }

@@ -19,7 +19,7 @@ public class TeamPanelFactory {
         panel.setBackground(Color.BLACK);
 
         // Define columns (only one for team name)
-        String[] columns = {"Team"};
+        String[] columns = {"Team","Standing"};
 
         DefaultTableModel tableModel = new DefaultTableModel(columns, 0) {
             @Override
@@ -47,6 +47,14 @@ public class TeamPanelFactory {
         splitPane.setResizeWeight(0.7);
         panel.add(splitPane, BorderLayout.CENTER);
 
+        // Populate table with driver data (excluding header row)
+        List<String> allTeams = backend.getTeams();
+        for (int i = 1; i < allTeams.size(); i++) {
+            String[] rawRow = allTeams.get(i).split(",");
+            String[] row = Arrays.stream(rawRow).map(String::trim).toArray(String[]::new);
+            tableModel.addRow(row);
+        }
+
         // Update detail panel when row is selected
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -54,14 +62,11 @@ public class TeamPanelFactory {
                 int row = table.getSelectedRow();
                 if (row >= 0) {
                     // Extract full data for the selected driver
-                    String info = (String) tableModel.getValueAt(row, 0);
-                    String teamName = info.substring(0,info.indexOf(","));
-                    String standing = info.substring(info.indexOf(",")+1);
-
+                    String teamName = (String) tableModel.getValueAt(row, 0);
                     String[] data = new String[2];
-                    data[0] = teamName;
-                    data[1] = standing;
-
+                    for (int i = 0; i < 2; i++) {
+                        data[i] = (String) tableModel.getValueAt(row, i);
+                    }
                     // Refresh the right-side panel with a new detail component
                     detailPanel.removeAll();
                     detailPanel.add(new TeamDetailPanel(teamName, data, backend, frontend), BorderLayout.CENTER);
