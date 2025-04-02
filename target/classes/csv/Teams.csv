@@ -1,11 +1,11 @@
-name,standing
-McLaren,1st
-Ferrari,2nd
-Red Bull Racing,3rd
-Mercedes,4th
-Aston Martin,5th
-Alpine,6th
-Racing Bulls,7th
-Haas,8th
-Williams,9th
-Kick Sauber,10th
+name,standing,sponsor,prize_money
+McLaren,1st,OKX,$140m
+Ferrari,2nd,HP,$131m
+Red Bull Racing,3rd,Oracle,$122m
+Mercedes,4th,Petronas,$113m
+Aston Martin,5th,Aramco,$104m
+Alpine,6th,BWT,$95m
+Racing Bulls,7th,Visa/Cashapp,$87m
+Haas,8th,MoneyGram,$78m
+Williams,9th,Atlassian,$69m
+Kick Sauber,10th,Stake,$60m

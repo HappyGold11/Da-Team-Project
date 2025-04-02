@@ -19,7 +19,7 @@ public class TeamPanelFactory {
         panel.setBackground(Color.BLACK);
 
         // Define columns (only one for team name)
-        String[] columns = {"Team","Standing"};
+        String[] columns = {"Team","Standing","Main Sponsor","Prize Money"};
 
         DefaultTableModel tableModel = new DefaultTableModel(columns, 0) {
             @Override
@@ -63,8 +63,8 @@ public class TeamPanelFactory {
                 if (row >= 0) {
                     // Extract full data for the selected driver
                     String teamName = (String) tableModel.getValueAt(row, 0);
-                    String[] data = new String[2];
-                    for (int i = 0; i < 2; i++) {
+                    String[] data = new String[4];
+                    for (int i = 0; i < 4; i++) {
                         data[i] = (String) tableModel.getValueAt(row, i);
                     }
                     // Refresh the right-side panel with a new detail component

@@ -65,7 +65,9 @@ class TeamDetailPanel extends JPanel {
 
         text.setText(
                 "Team name: " + data[0] + "\n" +
-                        "Standing: " + data[1] + "\n"
+                        "Standing: " + data[1] + "\n" +
+                        "Main Sponsor: " + data[2] + "\n" +
+                        "Prize Money: " + data[3]
         );
         return text;
     }
