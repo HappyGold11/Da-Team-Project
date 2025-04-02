@@ -19,7 +19,7 @@ public class TeamPanelFactory {
         panel.setBackground(Color.BLACK);
 
         // Define columns (only one for team name)
-        String[] columns = {"Team","Standing"};
+        String[] columns = {"Team"};
 
         DefaultTableModel tableModel = new DefaultTableModel(columns, 0) {
             @Override
@@ -47,43 +47,22 @@ public class TeamPanelFactory {
         splitPane.setResizeWeight(0.7);
         panel.add(splitPane, BorderLayout.CENTER);
 
-        // Populate table with driver data (excluding header row)
-        List<String> allTeams = backend.getTeams();
-        for (int i = 1; i < allTeams.size(); i++) {
-            String[] rawRow = allTeams.get(i).split(",");
-            String[] row = Arrays.stream(rawRow).map(String::trim).toArray(String[]::new);
-            tableModel.addRow(row);
-        }
-
-        // table model to linkedhashmap
-        LinkedHashMap<String, String> teamsMap = new LinkedHashMap<>();
-
-        for (int i = 0; i < tableModel.getRowCount(); i++) {
-            String teamName = tableModel.getValueAt(i, 0).toString(); // First column as key
-            String standing = tableModel.getValueAt(i, 1).toString(); // Assuming standing is in the second column
-
-            teamsMap.put(teamName, standing); // Store only team name and standing
-        }
-
-        tableModel.setRowCount(0);
-        for (Map.Entry<String, String> entry : teamsMap.entrySet()) {
-            tableModel.addRow(new Object[]{entry.getKey(), entry.getValue()});
-        }
-
         // Update detail panel when row is selected
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = table.getSelectedRow();
                 if (row >= 0) {
-                    tableModel.setRowCount(0);
-                    for (Map.Entry<String, String> entry : teamsMap.entrySet()) {
-                        tableModel.addRow(new Object[]{entry.getKey(), entry.getValue()});
-                    }
-                    String teamName = getKeyAtIndex(teamsMap, row);
+                    // Extract full data for the selected driver
+                    String info = (String) tableModel.getValueAt(row, 0);
+                    String teamName = info.substring(0,info.indexOf(","));
+                    String standing = info.substring(info.indexOf(",")+1);
+
                     String[] data = new String[2];
                     data[0] = teamName;
-                    data[1] = teamsMap.get(teamName);
+                    data[1] = standing;
+
+                    // Refresh the right-side panel with a new detail component
                     detailPanel.removeAll();
                     detailPanel.add(new TeamDetailPanel(teamName, data, backend, frontend), BorderLayout.CENTER);
                     detailPanel.revalidate();
@@ -94,14 +73,6 @@ public class TeamPanelFactory {
 
         return new TableBundle(panel, table, tableModel);
     }
-
-    public static <K, V> K getKeyAtIndex(LinkedHashMap<K, V> map, int index) {
-        if (index < 0 || index >= map.size()) {
-            return null; // Return null if index is invalid
-        }
-        return new ArrayList<>(map.keySet()).get(index); // Get key at index
-    }
-
 
     /**
      * Styles the driver JTable with alternating row colors, header formatting, and font settings.

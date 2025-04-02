@@ -59,13 +59,14 @@ class TeamDetailPanel extends JPanel {
         JTextArea text = new JTextArea();
         text.setEditable(false);
         text.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        text.setForeground(Color.RED);
+        text.setBackground(new Color(20, 20, 20));
+        text.setCaretColor(Color.RED);
+
         text.setText(
-                "Team Name: " + data[0] + "\n"
-                + "Standing: " + data[1] + "\n"
+                "Team name: " + data[0] + "\n" +
+                        "Standing: " + data[1] + "\n"
         );
-        text.setBackground(Color.BLACK);
-        text.setForeground(Color.WHITE); // red text
-        text.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         return text;
     }
 
