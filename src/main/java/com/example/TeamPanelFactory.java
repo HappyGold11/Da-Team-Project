@@ -5,6 +5,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 class TeamPanelFactory {
     /**
@@ -17,13 +19,11 @@ class TeamPanelFactory {
         panel.setBackground(Color.BLACK);
 
         // Define columns (only one for team name)
-        String[] columns = {"Team"};
+        String[] columns = {"Team","Standing"};
 
         DefaultTableModel tableModel = new DefaultTableModel(columns, 0) {
             @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
+            public boolean isCellEditable(int row, int column) {return false;}
         };
 
         JTable table = new JTable(tableModel);
@@ -47,10 +47,19 @@ class TeamPanelFactory {
         splitPane.setResizeWeight(0.7);
         panel.add(splitPane, BorderLayout.CENTER);
 
-        // Load team names into table
-        for (String team : backend.getTeams()) {
-            tableModel.addRow(new Object[]{team});
+        // Populate table with driver data (excluding header row)
+        List<String> allTeams = backend.getTeams();
+        for (int i = 1; i < allTeams.size(); i++) {
+            String[] rawRow = allTeams.get(i).split(",");
+            String[] row = Arrays.stream(rawRow).map(String::trim).toArray(String[]::new);
+            tableModel.addRow(row);
         }
+        // After populating the table
+        System.out.println("Table model contents:");
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            System.out.println("Row " + i + ": " + tableModel.getValueAt(i, 0));
+        }
+
 
         // Update detail panel when row is selected
         table.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -58,9 +67,16 @@ class TeamPanelFactory {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = table.getSelectedRow();
                 if (row >= 0) {
+                    // Convert view row to model row
+                    System.out.println("Value at model row: " + tableModel.getValueAt(row, 0));
+
                     String teamName = (String) tableModel.getValueAt(row, 0);
+                    String[] data = new String[2];
+                    for (int i = 0; i < 2; i++) {
+                        data[i] = (String) tableModel.getValueAt(row, i);
+                    }
                     detailPanel.removeAll();
-                    detailPanel.add(new TeamDetailPanel(teamName, backend, frontend), BorderLayout.CENTER);
+                    detailPanel.add(new TeamDetailPanel(teamName, data, backend, frontend), BorderLayout.CENTER);
                     detailPanel.revalidate();
                     detailPanel.repaint();
                 }
@@ -69,6 +85,7 @@ class TeamPanelFactory {
 
         return new TableBundle(panel, table, tableModel);
     }
+
 
     /**
      * Styles the driver JTable with alternating row colors, header formatting, and font settings.

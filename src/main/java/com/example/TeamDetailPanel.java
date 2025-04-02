@@ -9,13 +9,13 @@ class TeamDetailPanel extends JPanel {
     /**
      * Panel that displays logo and info about a selected team, with bookmarking control.
      */
-    public TeamDetailPanel(String teamName, Backend backend, Frontend frontend) {
+    public TeamDetailPanel(String teamName, String[] data,Backend backend, Frontend frontend) {
         super(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setBackground(Color.BLACK); // white background for the panel
 
         JLabel logoLabel = buildTeamLogo(teamName);
-        JTextArea teamInfo = buildTeamText(teamName);
+        JTextArea teamInfo = buildTeamText(data);
         JButton bookmarkButton = buildBookmarkButton(teamName, backend, frontend);
 
         add(logoLabel, BorderLayout.WEST);
@@ -55,13 +55,13 @@ class TeamDetailPanel extends JPanel {
     /**
      * Displays placeholder or actual team information.
      */
-    private JTextArea buildTeamText(String teamName) {
+    private JTextArea buildTeamText(String[] data) {
         JTextArea text = new JTextArea();
         text.setEditable(false);
         text.setFont(new Font("SansSerif", Font.PLAIN, 13));
         text.setText(
-                "Team Name: " + teamName + "\n\n" +
-                        "[More team stats, constructor standings, or history could go here.]"
+                "Team Name: " + data[0] + "\n"
+                + "Standing: " + data[1] + "\n"
         );
         text.setBackground(Color.BLACK);
         text.setForeground(Color.WHITE); // red text
