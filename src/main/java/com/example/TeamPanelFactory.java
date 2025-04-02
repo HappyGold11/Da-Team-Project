@@ -5,10 +5,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
 
-class TeamPanelFactory {
+public class TeamPanelFactory {
     /**
      * Constructs the full team tab interface, including a table listing team names
      * and a side panel for additional info and interaction.
@@ -54,12 +54,21 @@ class TeamPanelFactory {
             String[] row = Arrays.stream(rawRow).map(String::trim).toArray(String[]::new);
             tableModel.addRow(row);
         }
-        // After populating the table
-        System.out.println("Table model contents:");
+
+        // table model to linkedhashmap
+        LinkedHashMap<String, String> teamsMap = new LinkedHashMap<>();
+
         for (int i = 0; i < tableModel.getRowCount(); i++) {
-            System.out.println("Row " + i + ": " + tableModel.getValueAt(i, 0));
+            String teamName = tableModel.getValueAt(i, 0).toString(); // First column as key
+            String standing = tableModel.getValueAt(i, 1).toString(); // Assuming standing is in the second column
+
+            teamsMap.put(teamName, standing); // Store only team name and standing
         }
 
+        tableModel.setRowCount(0);
+        for (Map.Entry<String, String> entry : teamsMap.entrySet()) {
+            tableModel.addRow(new Object[]{entry.getKey(), entry.getValue()});
+        }
 
         // Update detail panel when row is selected
         table.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -67,14 +76,14 @@ class TeamPanelFactory {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = table.getSelectedRow();
                 if (row >= 0) {
-                    // Convert view row to model row
-                    System.out.println("Value at model row: " + tableModel.getValueAt(row, 0));
-
-                    String teamName = (String) tableModel.getValueAt(row, 0);
-                    String[] data = new String[2];
-                    for (int i = 0; i < 2; i++) {
-                        data[i] = (String) tableModel.getValueAt(row, i);
+                    tableModel.setRowCount(0);
+                    for (Map.Entry<String, String> entry : teamsMap.entrySet()) {
+                        tableModel.addRow(new Object[]{entry.getKey(), entry.getValue()});
                     }
+                    String teamName = getKeyAtIndex(teamsMap, row);
+                    String[] data = new String[2];
+                    data[0] = teamName;
+                    data[1] = teamsMap.get(teamName);
                     detailPanel.removeAll();
                     detailPanel.add(new TeamDetailPanel(teamName, data, backend, frontend), BorderLayout.CENTER);
                     detailPanel.revalidate();
@@ -84,6 +93,13 @@ class TeamPanelFactory {
         });
 
         return new TableBundle(panel, table, tableModel);
+    }
+
+    public static <K, V> K getKeyAtIndex(LinkedHashMap<K, V> map, int index) {
+        if (index < 0 || index >= map.size()) {
+            return null; // Return null if index is invalid
+        }
+        return new ArrayList<>(map.keySet()).get(index); // Get key at index
     }
 
 
