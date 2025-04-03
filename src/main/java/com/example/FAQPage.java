@@ -49,28 +49,36 @@ public class FAQPage {
         JPanel sectionPanel = new JPanel(new BorderLayout(20, 0));
         sectionPanel.setBackground(new Color(30, 30, 30));
         sectionPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
+    
         // Left text area (JLabel for better rendering)
         JLabel textLabel = new JLabel("<html><b>" + question + "</b><br><br>" + answer + "</html>");
         textLabel.setFont(new Font("SansSerif", Font.PLAIN, 15));
         textLabel.setForeground(new Color(230, 230, 230));
-
-        // Right image placeholder
+    
+        // Right image placeholder with preserved aspect ratio
         JLabel imageLabel = new JLabel();
-        imageLabel.setPreferredSize(new Dimension(200, 160));
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-        ImageIcon icon = new ImageIcon(FAQPage.class.getResource(imagePath));
-        if (icon.getImageLoadStatus() == MediaTracker.COMPLETE) {
-            Image scaled = icon.getImage().getScaledInstance(200, 160, Image.SCALE_SMOOTH);
+    
+        try {
+            ImageIcon icon = new ImageIcon(FAQPage.class.getResource(imagePath));
+            Image img = icon.getImage();
+            int maxW = 200, maxH = 160;
+            int imgW = icon.getIconWidth();
+            int imgH = icon.getIconHeight();
+            double scale = Math.min((double) maxW / imgW, (double) maxH / imgH);
+            int newW = (int) (imgW * scale);
+            int newH = (int) (imgH * scale);
+            Image scaled = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
             imageLabel.setIcon(new ImageIcon(scaled));
-        } else {
+            imageLabel.setPreferredSize(new Dimension(maxW, maxH)); // maintains consistent layout
+        } catch (Exception e) {
             imageLabel.setText("[Image not found]");
             imageLabel.setFont(new Font("SansSerif", Font.ITALIC, 14));
             imageLabel.setForeground(Color.LIGHT_GRAY);
             imageLabel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+            imageLabel.setPreferredSize(new Dimension(200, 160));
         }
-
+    
         sectionPanel.add(textLabel, BorderLayout.CENTER);
         sectionPanel.add(imageLabel, BorderLayout.EAST);
         return sectionPanel;
