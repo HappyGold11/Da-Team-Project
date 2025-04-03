@@ -30,12 +30,20 @@ public class FAQPage {
 
         // FAQ Sections
         bodyPanel.add(createSection("How do I add drivers or teams to my list?",
-                "Navigate to the 'Drivers' or 'Teams' tab and click on the 'Bookmark Driver' button. This will save your selections for quick access.",
+                "You first need to be login then navigate to the 'Drivers' or 'Teams' tab and click on the 'Bookmark Driver' button. This will save your selections for quick access.",
                 "/img/bookmarkbutton.png"));
 
         bodyPanel.add(createSection("Where can I see my Drivers or Teams list?",
-                "Click the 'Show Bookmark' button at the top of the page to see your personal Driver or Team list.",
+                "You first need to be login then click the 'Show Bookmark' button at the top of the page to see your personal Driver or Team list.",
                 "/img/showbookmarktab.png"));
+
+        bodyPanel.add(createSection("How can I Registor?",
+                "You have to click the 'registor' button, then the pop box for the registration will come up. Put in a username and password and press 'ok'",
+                "/img/howtoregister.png"));
+
+        bodyPanel.add(createSection("How can I Login?",
+                "First you will need to registor, afterwards press the 'Login' button which the login box will pop out. Remaber your usename and the password you use to Registor and login with that.",
+                "/img/howtologin.png"));
 
         JScrollPane scrollPane = new JScrollPane(bodyPanel);
         scrollPane.setBorder(null);
