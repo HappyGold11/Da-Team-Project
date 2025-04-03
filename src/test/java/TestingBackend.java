@@ -40,7 +40,7 @@ public class TestingBackend {
         List<String> dataList = new ArrayList<>();
         backend.loadDataFromCSV("csv/Teams.csv", dataList);
         List<String> team = new ArrayList<>();
-        team.add(dataList.get(2));
+        team.add(dataList.get(3));
         assertEquals(team,backend.searchTeams("Red"));
     }
 
@@ -60,7 +60,7 @@ public class TestingBackend {
         Backend backend = new Backend(() -> "TestUser");
         List<String> dataList = new ArrayList<>();
         backend.loadDataFromCSV("csv/Teams.csv", dataList);
-        backend.addTeamToPersonalList(dataList.get(2));
+        backend.addTeamToPersonalList(dataList.get(3).split(",")[0]);
         List<String> team = new ArrayList<>();
         team.add("Red Bull Racing");
         assertEquals(team,backend.getPersonalTeamsList());
