@@ -64,7 +64,7 @@ class DriverDetailPanel extends JPanel {
         JTextArea text = new JTextArea();
         text.setEditable(false);
         text.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        text.setForeground(Color.RED);
+        text.setForeground(Color.WHITE);
         text.setBackground(new Color(20, 20, 20));
         text.setCaretColor(Color.RED);
 
@@ -86,8 +86,8 @@ class DriverDetailPanel extends JPanel {
      */
     private JButton buildBookmarkButton(String driverName, Backend backend, Frontend frontend) {
         JButton button = new JButton(backend.isDriverBookmarked(driverName) ? "Unbookmark Driver" : "Bookmark Driver");
-        button.setBackground(new Color(50, 0, 0));
-        button.setForeground(Color.RED);
+        button.setBackground(new Color(225, 6, 0));
+        button.setForeground(Color.white);
         button.setFocusPainted(false);
 
         button.addActionListener(e -> {

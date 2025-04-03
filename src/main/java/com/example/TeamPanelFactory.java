@@ -31,9 +31,15 @@ public class TeamPanelFactory {
 
         // Default detail label on the right
         JPanel detailPanel = new JPanel(new BorderLayout());
+        detailPanel.setBackground(new Color(20, 20, 20)); // 🔴 Set background red
+
         JLabel defaultLabel = new JLabel("Select a team to see more details...");
         defaultLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
         defaultLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        defaultLabel.setForeground(Color.WHITE); // ⚪ Optional: white text for contrast
+        defaultLabel.setBackground(new Color(20, 20, 20)); // Match background
+        defaultLabel.setOpaque(true); // Important so background shows
+
         detailPanel.add(defaultLabel, BorderLayout.CENTER);
 
         JScrollPane tableScrollPane = new JScrollPane(table);
@@ -108,9 +114,9 @@ public class TeamPanelFactory {
         });
 
         table.setRowHeight(24);
-        table.setBackground(Color.BLACK);
+        table.setBackground(new Color(20, 20, 20));
         table.setForeground(Color.RED);
         table.setGridColor(Color.RED);
-        table.setSelectionForeground(Color.BLACK); // Optional for contrast
+        table.setSelectionForeground(new Color(20, 20, 20));
     }
 }

@@ -12,7 +12,7 @@ class TeamDetailPanel extends JPanel {
     public TeamDetailPanel(String teamName, String[] data,Backend backend, Frontend frontend) {
         super(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        setBackground(Color.BLACK); // white background for the panel
+        setBackground(new Color(20, 20, 20)); // white background for the panel
 
         JLabel logoLabel = buildTeamLogo(teamName);
         JTextArea teamInfo = buildTeamText(data);
@@ -59,7 +59,7 @@ class TeamDetailPanel extends JPanel {
         JTextArea text = new JTextArea();
         text.setEditable(false);
         text.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        text.setForeground(Color.RED);
+        text.setForeground(Color.WHITE);
         text.setBackground(new Color(20, 20, 20));
         text.setCaretColor(Color.RED);
 
@@ -78,7 +78,7 @@ class TeamDetailPanel extends JPanel {
     private JButton buildBookmarkButton(String teamName, Backend backend, Frontend frontend) {
         JButton button = new JButton(backend.isTeamBookmarked(teamName) ? "Unbookmark Team" : "Bookmark Team");
 
-        button.setBackground(Color.RED);
+        button.setBackground(new Color(225, 6, 0));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setFont(new Font("SansSerif", Font.BOLD, 12));

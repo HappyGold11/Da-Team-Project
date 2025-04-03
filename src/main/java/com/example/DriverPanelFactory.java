@@ -42,7 +42,7 @@ public class DriverPanelFactory {
         JLabel defaultLabel = new JLabel("Select a driver to see more details...");
         defaultLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
         defaultLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        defaultLabel.setForeground(Color.RED); // Red text
+        defaultLabel.setForeground(Color.white); // Red text
 
         detailPanel.add(defaultLabel, BorderLayout.CENTER);
 
@@ -103,7 +103,7 @@ public class DriverPanelFactory {
             @Override
             public Component getTableCellRendererComponent(JTable tbl, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(tbl, value, isSelected, hasFocus, row, column);
-                c.setForeground(Color.RED);
+                c.setForeground(Color.WHITE);
                 c.setFont(new Font("SansSerif", Font.PLAIN, 13));
 
                 if (isSelected) {
