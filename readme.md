@@ -8,20 +8,17 @@ The **F1 Database** is a Java-based application that allows users to view and se
 Da-Team-Project/
 ├── src/
 │   ├── main/java/com/example/
-│   │   ├── Backend.java
-│   │   ├── Frontend.java
 │   ├── main/resources/csv/
-│   │   ├── Drivers.csv
-│   │   ├── Teams.csv
+│   ├── main/resources/img/Head_Shots/
+│   ├── main/resources/img/Team_Logos/
 │   ├── test/java/
-│   │   ├── TestingBackend.java
-│   │   ├── TestingFrontend.java
-│   ├── test/resources/csv/
-│   │   ├── test.csv
+├── target/
 ├── pom.xml
-└── README.md
+├── .gitignore
+├── build.bat
+├── build.sh
+
 ```
-*Subject to change over time.*
 
 ## 🔧 Installation & Setup
 ### **1. Prerequisites**
