@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.function.Supplier;
 
 public class Backend {
     /*
@@ -23,8 +24,12 @@ public class Backend {
     private Set<String> bookmarkedDrivers = new HashSet<>();
     private Set<String> bookmarkedTeams = new HashSet<>();
 
-    public Backend() {
-        // Initialize lists
+    private final Supplier<String> currentUserSupplier;
+
+    public Backend(Supplier<String> currentUserSupplier) {
+        this.currentUserSupplier = currentUserSupplier;
+
+        // create lists
         drivers = new ArrayList<>();
         teams = new ArrayList<>();
         personalDriversList = new ArrayList<>();
@@ -34,23 +39,27 @@ public class Backend {
         loadDataFromCSV("csv/Drivers.csv", drivers);
         loadDataFromCSV("csv/Teams.csv", teams);
 
-        // Load bookmarked data
         loadBookmarks();
     }
 
-    /**
-     * Loads CSV data into a provided list.
-     * @param fileName path to the CSV file.
-     * @param list destination list for parsed lines.
-     */
+    public void setCurrentUser(String user) {
+        loadBookmarks();
+    }
+
+    private String getBookmarkFilename(String base, String extension) {
+        String user = currentUserSupplier.get();
+        if (user == null || user.isEmpty()) return null;
+        return base + "_" + user + extension;
+    }
+
     public void loadDataFromCSV(String fileName, List<String> list) {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
              BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] data = line.split(","); // Split line by commas
+                String[] data = line.split(",");
                 if (data.length >= 1) {
-                    list.add(line); // Add line to list
+                    list.add(line);
                 }
             }
         } catch (IOException | NullPointerException e) {
@@ -58,66 +67,44 @@ public class Backend {
         }
     }
 
-    public List<String> getDrivers() {
-        return drivers;
-    }
-
-    public List<String> getTeams() {
-        return teams;
-    }
-
+    public List<String> getDrivers() { return drivers; }
+    public List<String> getTeams() { return teams; }
     public void addDriverToPersonalList(String driver) {
-        if (!personalDriversList.contains(driver)) {
-            personalDriversList.add(driver); // Add driver if not already in personal list
-        }
-    }
-
+        if (!personalDriversList.contains(driver)) personalDriversList.add(driver);
+    } // add driver if not in list
     public void addTeamToPersonalList(String team) {
-        if (!personalTeamsList.contains(team)) {
-            personalTeamsList.add(team); // Add team if not already in personal list
-        }
+        if (!personalTeamsList.contains(team)) personalTeamsList.add(team);
     }
+    public List<String> getPersonalDriversList() { return personalDriversList; }
+    public List<String> getPersonalTeamsList() { return personalTeamsList; }
 
-    public List<String> getPersonalDriversList() {
-        return personalDriversList;
-    }
-
-    public List<String> getPersonalTeamsList() {
-        return personalTeamsList;
-    }
-
-    /**
-     * Searches for drivers that contain the query string.
-     */
     public List<String> searchDrivers(String text) {
-        if (text == null || text.trim().isEmpty()) {
-            return drivers; // Return all drivers if no query
-        }
+        if (text == null || text.trim().isEmpty()) return drivers;
         String query = text.toLowerCase();
-        return drivers.stream()
-                .filter(driver -> driver.toLowerCase().contains(query))
-                .collect(Collectors.toList());
+        return drivers.stream().filter(driver -> driver.toLowerCase().contains(query)).collect(Collectors.toList());
     }
 
     /**
      * Searches for teams that contain the query string.
      */
     public List<String> searchTeams(String text) {
-        if (text == null || text.trim().isEmpty()) {
-            return teams; // Return all teams if no query
-        }
+        if (text == null || text.trim().isEmpty()) return teams;
         String query = text.toLowerCase();
-        return teams.stream()
-                .filter(team -> team.toLowerCase().contains(query))
-                .collect(Collectors.toList());
+        return teams.stream().filter(team -> team.toLowerCase().contains(query)).collect(Collectors.toList());
     }
 
     /**
      * Loads bookmarked driver and team names from file.
      */
     private void loadBookmarks() {
-        bookmarkedDrivers = loadFromFile(DRIVER_BOOKMARK_FILE);
-        bookmarkedTeams = loadFromFile(TEAM_BOOKMARK_FILE);
+        bookmarkedDrivers.clear();
+        bookmarkedTeams.clear();
+
+        String driverFile = getBookmarkFilename("Bookmarks/bookmarked_drivers", ".csv");
+        String teamFile = getBookmarkFilename("Bookmarks/bookmarked_teams", ".csv");
+
+        if (driverFile != null) bookmarkedDrivers = loadFromFile(driverFile);
+        if (teamFile != null) bookmarkedTeams = loadFromFile(teamFile);
     }
 
     /**
@@ -140,21 +127,24 @@ public class Backend {
     }
 
     public boolean bookmarkDriver(String name) {
-        if (bookmarkedDrivers.contains(name)) return false; // Already bookmarked
+        if (currentUserSupplier.get() == null) return false;
+        if (bookmarkedDrivers.contains(name)) return false;
         bookmarkedDrivers.add(name);
-        return appendToFile(DRIVER_BOOKMARK_FILE, name); // Append to file
+        return appendToFile(getBookmarkFilename("Bookmarks/bookmarked_drivers", ".csv"), name);
     }
 
     public boolean bookmarkTeam(String name) {
-        if (bookmarkedTeams.contains(name)) return false; // Already bookmarked
+        if (currentUserSupplier.get() == null) return false;
+        if (bookmarkedTeams.contains(name)) return false; // already bookmarked
         bookmarkedTeams.add(name);
-        return appendToFile(TEAM_BOOKMARK_FILE, name); // Append to file
+        return appendToFile(getBookmarkFilename("Bookmarks/bookmarked_teams", ".csv"), name); // add to file
     }
 
     /**
      * Appends a single line to a file.
      */
     private boolean appendToFile(String filename, String entry) {
+        if (filename == null) return false;
         try (FileWriter writer = new FileWriter(filename, true)) {
             writer.write(entry + "\n"); // Write entry followed by newline
             return true;
@@ -175,20 +165,22 @@ public class Backend {
     public boolean unbookmarkDriver(String name) {
         if (!bookmarkedDrivers.contains(name)) return false;
         bookmarkedDrivers.remove(name);
-        return overwriteFile(DRIVER_BOOKMARK_FILE, bookmarkedDrivers); // Rewrite file
+        return overwriteFile(getBookmarkFilename("Bookmarks/bookmarked_drivers", ".csv"), bookmarkedDrivers);
     }
 
     public boolean unbookmarkTeam(String name) {
         if (!bookmarkedTeams.contains(name)) return false;
         bookmarkedTeams.remove(name);
-        return overwriteFile(TEAM_BOOKMARK_FILE, bookmarkedTeams); // Rewrite file
+        //re-wright
+        return overwriteFile(getBookmarkFilename("Bookmarks/bookmarked_teams", ".csv"), bookmarkedTeams);
     }
 
     /**
      * Rewrites all lines of a file with new entries.
      */
     private boolean overwriteFile(String filename, Set<String> entries) {
-        try (FileWriter writer = new FileWriter(filename, false)) { // Overwrite mode
+        if (filename == null) return false;
+        try (FileWriter writer = new FileWriter(filename, false)) { //overwrite
             for (String entry : entries) {
                 writer.write(entry + "\n");
             }
@@ -199,7 +191,7 @@ public class Backend {
         }
     }
 
-    // Placeholder methods for login/registration functionality
+    // Deprecated stubs
     public void register(String file, String user, String pass) {}
     public String matchLogin(String login) { return ""; }
     public String login(String user, String pass) { return ""; }

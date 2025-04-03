@@ -15,7 +15,7 @@ public class TestingBackend {
 
     @Test
     public void TestCSV(){
-        Backend backend = new Backend();
+        Backend backend = new Backend(() -> "TestUser");
         List<String> dataList = new ArrayList<>();
         backend.loadDataFromCSV("csv/test.csv", dataList);
 
@@ -26,7 +26,7 @@ public class TestingBackend {
 
     @Test
     public void TestDriverSearch(){
-        Backend backend = new Backend();
+        Backend backend = new Backend(() -> "TestUser");
         List<String> dataList = new ArrayList<>();
         backend.loadDataFromCSV("csv/Drivers.csv", dataList);
         List<String> driver = new ArrayList<>();
@@ -36,7 +36,7 @@ public class TestingBackend {
 
     @Test
     public void TestTeamSearch(){
-        Backend backend = new Backend();
+        Backend backend = new Backend(() -> "TestUser");
         List<String> dataList = new ArrayList<>();
         backend.loadDataFromCSV("csv/Teams.csv", dataList);
         List<String> team = new ArrayList<>();
@@ -46,7 +46,7 @@ public class TestingBackend {
 
     @Test
     public void TestDriverPersonalList(){
-        Backend backend = new Backend();
+        Backend backend = new Backend(() -> "TestUser");
         List<String> dataList = new ArrayList<>();
         backend.loadDataFromCSV("csv/Drivers.csv", dataList);
         backend.addDriverToPersonalList(dataList.get(5));
@@ -57,7 +57,7 @@ public class TestingBackend {
 
     @Test
     public void TestTeamPersonalList(){
-        Backend backend = new Backend();
+        Backend backend = new Backend(() -> "TestUser");
         List<String> dataList = new ArrayList<>();
         backend.loadDataFromCSV("csv/Teams.csv", dataList);
         backend.addTeamToPersonalList(dataList.get(2));
@@ -70,7 +70,7 @@ public class TestingBackend {
      @Test
      @Ignore public void TestRegister() {
          try {
-             Backend backend = new Backend();
+             Backend backend = new Backend(() -> "TestUser");
              backend.register("csv/Login.csv", "Username", "Password"); //Register Username and password in Login database
              String filteredLogin = backend.matchLogin("Username, Password"); //Takes a String value and searches in Login.csv for a match
              assertEquals("Username, Password", filteredLogin); //Compares the entire line in database to match with the username and password
@@ -83,7 +83,7 @@ public class TestingBackend {
     @Test
     @Ignore public void TestLogin() {
         try {
-            Backend backend = new Backend();
+            Backend backend = new Backend(() -> "TestUser");
             List<String> loginInfo = new ArrayList<>();
             backend.loadDataFromCSV("csv/Login.csv", loginInfo);
             for (String line : loginInfo) {

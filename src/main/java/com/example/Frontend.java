@@ -19,8 +19,8 @@ public class Frontend {
     private final Color buttonColor = new Color(225, 6, 0);
     private final Color tableHeaderColor = new Color(30, 30, 30);
 
-    // Backend for data management
-    Backend backend = new Backend();
+    Backend backend;
+    LoginManager loginManager;
 
     // GUI Components
     public DefaultTableModel driverTableModel;
@@ -32,10 +32,15 @@ public class Frontend {
     public boolean showBookmarkedTeamsOnly = false;
     private JTabbedPane tabbedPane;
 
-    /**
-     * Sets up the main JFrame, builds tabbed content, top bar, and search panel.
-     */
+    private JLabel userLabel;
+    private JButton loginButton;
+    private JButton registerButton;
+    private JButton logoutButton;
+
     public Frontend() {
+        loginManager = new LoginManager();
+        backend = new Backend(() -> loginManager.getCurrentUser());
+
         JFrame frame = new JFrame("F1 Database");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1500, 700);
@@ -66,19 +71,49 @@ public class Frontend {
         topPanel.setBackground(backgroundColor);
 
         JButton bookmarkToggleButton = createStyledButton("Show Bookmarked");
-        JButton button3 = createStyledButton("Settings");
-        JButton button4 = createStyledButton("Login");
-        JButton button5 = createStyledButton("Register");
+        loginButton = createStyledButton("Login");
+        registerButton = createStyledButton("Register");
+        logoutButton = createStyledButton("Logout");
+        logoutButton.setVisible(false);
+
+        userLabel = new JLabel("Not logged in");
+        userLabel.setForeground(foregroundColor);
 
         topPanel.add(bookmarkToggleButton);
-        topPanel.add(button3);
-        topPanel.add(button4);
-        topPanel.add(button5);
+        topPanel.add(loginButton);
+        topPanel.add(registerButton);
+        topPanel.add(logoutButton);
+        topPanel.add(userLabel);
 
-        button4.addActionListener(e -> loginDialog());
-        button5.addActionListener(e -> registerDialog());
+        loginButton.addActionListener(e -> {
+            LoginManager.showLoginDialog(loginManager);
+            if (loginManager.getCurrentUser() != null) {
+                backend.setCurrentUser(loginManager.getCurrentUser());
+                updateAuthUI();
+            }
+        });
+
+        registerButton.addActionListener(e -> LoginManager.showRegisterDialog(loginManager));
+
+        logoutButton.addActionListener(e -> {
+            loginManager.logout();
+            backend.setCurrentUser(null);
+            updateAuthUI();
+        });
 
         bookmarkToggleButton.addActionListener(e -> {
+
+            // Make a pop-up if they try to add bookmark without login
+            if (loginManager.getCurrentUser() == null) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "You must be logged in to toggle bookmarks.",
+                        "Login Required",
+                        JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+
             boolean showingBookmarks = !showBookmarkedDriversOnly;
             showBookmarkedDriversOnly = showingBookmarks;
             showBookmarkedTeamsOnly = showingBookmarks;
@@ -90,9 +125,17 @@ public class Frontend {
             else if (selectedTab == 2) loadTeamData(showBookmarkedTeamsOnly);
         });
 
+
         return topPanel;
     }
 
+    private void updateAuthUI() {
+        boolean loggedIn = loginManager.getCurrentUser() != null;
+        loginButton.setVisible(!loggedIn);
+        registerButton.setVisible(!loggedIn);
+        logoutButton.setVisible(loggedIn);
+        userLabel.setText(loggedIn ? "Logged in as: " + loginManager.getCurrentUser() : "Not logged in");
+    }
     /**
      * Utility to create red-themed buttons.
      */
@@ -284,4 +327,6 @@ public class Frontend {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Frontend::new);
     }
+
+
 }
