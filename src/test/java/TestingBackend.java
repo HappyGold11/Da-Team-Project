@@ -1,10 +1,15 @@
 
 
+import com.example.LoginManager;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import com.example.Backend;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,12 +73,21 @@ public class TestingBackend {
 
     //Test Registration
      @Test
-     @Ignore public void TestRegister() {
+     public void TestRegister() {
          try {
-             Backend backend = new Backend(() -> "TestUser");
-             backend.register("csv/Login.csv", "Username", "Password"); //Register Username and password in Login database
-             String filteredLogin = backend.matchLogin("Username, Password"); //Takes a String value and searches in Login.csv for a match
-             assertEquals("Username, Password", filteredLogin); //Compares the entire line in database to match with the username and password
+             LoginManager loginManager = new LoginManager();
+             loginManager.register("Username", "Password"); //Register Username and password in Login database
+             List<String> dataList = new ArrayList<>();
+
+             //Read Login file and put data into datalist
+             Files.lines(Paths.get("Bookmarks/login_data.csv")).forEach(line -> {
+                 String[] parts = line.split(",");
+                 if (parts.length == 2) {
+                     dataList.add(parts[0] + "," + parts[1]);
+                 }
+             });
+
+             assertEquals("Username,e7cf3ef4f17c3999a94f2c6f612e8a888e5b1026878e4e19398b23bd38ec221a", dataList.getLast()); //Compares the entire line in database to match with the username and password
          } catch (Exception e) {
              throw new RuntimeException(e);
          }
@@ -81,15 +95,21 @@ public class TestingBackend {
 
     //Test Login feature
     @Test
-    @Ignore public void TestLogin() {
+    public void TestLogin() {
         try {
             Backend backend = new Backend(() -> "TestUser");
-            List<String> loginInfo = new ArrayList<>();
-            backend.loadDataFromCSV("csv/Login.csv", loginInfo);
-            for (String line : loginInfo) {
-                String[] info = line.split(",");
-                assertEquals("Successfully Logged In", backend.login(info[0], info[1])); //Login returns a String message when successful
-            }
+            LoginManager loginManager = new LoginManager();
+            List<String> dataList = new ArrayList<>();
+
+            //Read Login file and put data into datalist
+            Files.lines(Paths.get("Bookmarks/login_data.csv")).forEach(line -> {
+                String[] parts = line.split(",");
+                if (parts.length == 2) {
+                    dataList.add(parts[0] + "," + parts[1]);
+                }
+            });
+
+            assertTrue(loginManager.login("Username", "Password")); //Login returns a String message when successful
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
