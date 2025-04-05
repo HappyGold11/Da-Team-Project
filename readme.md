@@ -88,7 +88,8 @@ mvn clean install
 - Builds the project
 - Runs the JAR file
 
-**Alternative Runnable Jar File**
+### **Alternative Runnable Jar File**
+
 1. Navigate to 'out/artifacts/f1database_jar/'
 2. Double-click the 'f1database.jar' file
 
