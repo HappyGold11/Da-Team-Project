@@ -1,13 +1,10 @@
 
 
 import com.example.LoginManager;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.example.Backend;
 
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -87,7 +84,8 @@ public class TestingBackend {
                  }
              });
 
-             assertEquals("Username,e7cf3ef4f17c3999a94f2c6f612e8a888e5b1026878e4e19398b23bd38ec221a", dataList.getLast()); //Compares the entire line in database to match with the username and password
+             //Compares the entire line in database to match with the username and password
+             assertEquals("Username,e7cf3ef4f17c3999a94f2c6f612e8a888e5b1026878e4e19398b23bd38ec221a", dataList.get(dataList.size()-1));
          } catch (Exception e) {
              throw new RuntimeException(e);
          }
@@ -109,7 +107,7 @@ public class TestingBackend {
                 }
             });
 
-            assertTrue(loginManager.login("Username", "Password")); //Login returns a String message when successful
+            assertTrue(loginManager.login("Username", "Password")); //Login returns True when successful
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
